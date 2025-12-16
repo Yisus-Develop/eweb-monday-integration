@@ -1,0 +1,644 @@
+[
+    {
+        "id": 6811,
+        "title": "form pie de pagina",
+        "fields": [
+            {
+                "name": "next_step",
+                "type": "hidden",
+                "options": "\"confirmacion\""
+            },
+            {
+                "name": "pais_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ciudad_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "perfil",
+                "type": "select",
+                "options": "          \"Selecciona tu perfil...\" \n          \"Empresa\" \"Pioneer \/ Mission Partner\" \"Ciudad \/ Gobierno local\" \n          \"Institución educativa\" \"Maestro \/ Mentor\" \"Interesado país\" \"Joven (Zer)\""
+            },
+            {
+                "name": "nombre",
+                "type": "text",
+                "options": "placeholder \"Nombre y Apellido\""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": "placeholder \"Email\""
+            },
+            {
+                "name": "institucion",
+                "type": "text",
+                "options": "placeholder \"Nombre de la institución\""
+            },
+            {
+                "name": "asunto",
+                "type": "text",
+                "options": "placeholder \"Tema del mensaje\""
+            },
+            {
+                "name": "mensaje",
+                "type": "textarea",
+                "options": "placeholder rows:4 \"Escribe tu mensaje aquí\""
+            }
+        ]
+    },
+    {
+        "id": 6807,
+        "title": "contacto general",
+        "fields": [
+            {
+                "name": "next_step",
+                "type": "hidden",
+                "options": "\"confirmacion\""
+            },
+            {
+                "name": "pais_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ciudad_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "perfil",
+                "type": "select",
+                "options": "          \"Selecciona tu perfil...\" \n          \"Empresa\" \"Pioneer \/ Mission Partner\" \"Ciudad \/ Gobierno local\" \n          \"Institución educativa\" \"Maestro \/ Mentor\" \"Interesado país\" \"Joven (Zer)\""
+            },
+            {
+                "name": "nombre",
+                "type": "text",
+                "options": "placeholder \"Nombre y Apellido\""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": "placeholder \"Email\""
+            },
+            {
+                "name": "institucion",
+                "type": "text",
+                "options": "placeholder \"Nombre de la institución\""
+            },
+            {
+                "name": "asunto",
+                "type": "text",
+                "options": "placeholder \"Tema del mensaje\""
+            },
+            {
+                "name": "mensaje",
+                "type": "textarea",
+                "options": "placeholder \"Escribe tu mensaje aquí\""
+            }
+        ]
+    },
+    {
+        "id": 6468,
+        "title": "Beneficios instituciones",
+        "fields": [
+            {
+                "name": "perfil",
+                "type": "hidden",
+                "options": "\"institucion\""
+            },
+            {
+                "name": "next_step",
+                "type": "hidden",
+                "options": "\"confirmacion\""
+            },
+            {
+                "name": "pais_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ciudad_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "org_name",
+                "type": "text",
+                "options": "placeholder \"Nombre de la institución\""
+            },
+            {
+                "name": "contact_name",
+                "type": "text",
+                "options": "placeholder \"Nombre de contacto\""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": "placeholder \"Email\""
+            },
+            {
+                "name": "telefono",
+                "type": "tel",
+                "options": "placeholder \"+34 600 000 000\""
+            },
+            {
+                "name": "tipo_institucion",
+                "type": "select",
+                "options": "\"Selección tipo de institución\" \"Colegios\" \"Universidad\" \"Centro técnico\" \"otro\""
+            },
+            {
+                "name": "numero_estudiantes",
+                "type": "number",
+                "options": "min:0 placeholder \"Ej: 1200\""
+            },
+            {
+                "name": "pais_otro",
+                "type": "text",
+                "options": "class:mc-pais-otro placeholder \"Escribe tu país\""
+            },
+            {
+                "name": "timestamp-field",
+                "type": "hidden",
+                "options": "id:timestamp-field"
+            }
+        ]
+    },
+    {
+        "id": 5410,
+        "title": "Suscribirme a alertas",
+        "fields": [
+            {
+                "name": "ea_firstname",
+                "type": "text",
+                "options": "placeholder \"Tus nombres\""
+            },
+            {
+                "name": "ea_lastname",
+                "type": "text",
+                "options": "placeholder \"Tus apellidos\""
+            },
+            {
+                "name": "ea_role",
+                "type": "text",
+                "options": "placeholder \"Ej. Profesor, CEO, Estudiante\""
+            },
+            {
+                "name": "ea_institution",
+                "type": "text",
+                "options": "placeholder \"Nombre de tu institución\""
+            },
+            {
+                "name": "ea_email",
+                "type": "email",
+                "options": "placeholder \"tu@correo.com\""
+            },
+            {
+                "name": "ea_city",
+                "type": "text",
+                "options": "placeholder \"Ciudad\""
+            },
+            {
+                "name": "ea_country",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ea_lang",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ea_source",
+                "type": "hidden",
+                "options": "\"popup\""
+            },
+            {
+                "name": "ea_referrer",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ea_tags",
+                "type": "hidden",
+                "options": "\"events,alerts\""
+            },
+            {
+                "name": "ea_timestamp",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ea_nonce",
+                "type": "hidden",
+                "options": ""
+            }
+        ]
+    },
+    {
+        "id": 3074,
+        "title": "Registro País",
+        "fields": [
+            {
+                "name": "perfil",
+                "type": "hidden",
+                "options": "\"pais\""
+            },
+            {
+                "name": "next_step",
+                "type": "hidden",
+                "options": "\"confirmacion\""
+            },
+            {
+                "name": "pais_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ciudad_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "nombre",
+                "type": "text",
+                "options": "placeholder \"Nombre completo\""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": "placeholder \"Email\""
+            },
+            {
+                "name": "pais_otro",
+                "type": "text",
+                "options": "class:mc-pais-otro placeholder \"Escribe tu país\""
+            },
+            {
+                "name": "mensaje",
+                "type": "textarea",
+                "options": "placeholder \"Cuéntanos los motivos\""
+            }
+        ]
+    },
+    {
+        "id": 3073,
+        "title": "Mission Partner \/ Pioneer",
+        "fields": [
+            {
+                "name": "perfil",
+                "type": "hidden",
+                "options": "\"pioneer\""
+            },
+            {
+                "name": "next_step",
+                "type": "hidden",
+                "options": "\"confirmacion\""
+            },
+            {
+                "name": "pais_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ciudad_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "nombre",
+                "type": "text",
+                "options": "placeholder \"Nombre completo\""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": "placeholder \"Email\""
+            },
+            {
+                "name": "interes",
+                "type": "text",
+                "options": "placeholder \"¿Cómo quieres participar?\""
+            },
+            {
+                "name": "telefono",
+                "type": "tel",
+                "options": "placeholder \"+34 600 000 000\""
+            },
+            {
+                "name": "pais_otro",
+                "type": "text",
+                "options": "class:mc-pais-otro placeholder \"Escribe tu país\""
+            }
+        ]
+    },
+    {
+        "id": 3072,
+        "title": "Registro Ciudad \/ Gobierno local",
+        "fields": [
+            {
+                "name": "perfil",
+                "type": "hidden",
+                "options": "\"ciudad\""
+            },
+            {
+                "name": "next_step",
+                "type": "hidden",
+                "options": "\"confirmacion\""
+            },
+            {
+                "name": "pais_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ciudad_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "entity",
+                "type": "text",
+                "options": "placeholder \"Nombre de la ciudad\/entidad\""
+            },
+            {
+                "name": "nombre",
+                "type": "text",
+                "options": "placeholder \"Nombre y Apellido\""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": "placeholder \"Email\""
+            },
+            {
+                "name": "telefono",
+                "type": "tel",
+                "options": "placeholder \"+34 600 000 000\""
+            },
+            {
+                "name": "poblacion",
+                "type": "number",
+                "options": "min:0 placeholder \"Ej: 500000\""
+            },
+            {
+                "name": "aliados_potenciales",
+                "type": "textarea",
+                "options": "placeholder \"Universidades, empresas, ONGs, etc.\""
+            },
+            {
+                "name": "pais_otro",
+                "type": "text",
+                "options": "class:mc-pais-otro placeholder \"Escribe tu país\""
+            }
+        ]
+    },
+    {
+        "id": 3071,
+        "title": "Empresa",
+        "fields": [
+            {
+                "name": "perfil",
+                "type": "hidden",
+                "options": "\"empresa\""
+            },
+            {
+                "name": "next_step",
+                "type": "hidden",
+                "options": "\"confirmacion\""
+            },
+            {
+                "name": "pais_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ciudad_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "company",
+                "type": "text",
+                "options": "placeholder \"Nombre de la empresa\""
+            },
+            {
+                "name": "nombre",
+                "type": "text",
+                "options": "placeholder \"Nombre y Apellido\""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": "placeholder \"Email\""
+            },
+            {
+                "name": "modality",
+                "type": "select",
+                "options": "\"Donación\" \"Beca\""
+            },
+            {
+                "name": "sector",
+                "type": "text",
+                "options": "placeholder \"Tecnología, Salud, Financiero…\""
+            },
+            {
+                "name": "telefono",
+                "type": "tel",
+                "options": "placeholder \"+34 600 000 000\""
+            },
+            {
+                "name": "pais_otro",
+                "type": "text",
+                "options": "class:mc-pais-otro placeholder \"Escribe tu país\""
+            }
+        ]
+    },
+    {
+        "id": 3070,
+        "title": "Registro Institución Educativa",
+        "fields": [
+            {
+                "name": "perfil",
+                "type": "hidden",
+                "options": "\"institucion\""
+            },
+            {
+                "name": "next_step",
+                "type": "hidden",
+                "options": "\"confirmacion\""
+            },
+            {
+                "name": "pais_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ciudad_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "org_name",
+                "type": "text",
+                "options": "placeholder \"Nombre de la institución\""
+            },
+            {
+                "name": "contact_name",
+                "type": "text",
+                "options": "placeholder \"Nombre de contacto\""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": "placeholder \"Email\""
+            },
+            {
+                "name": "telefono",
+                "type": "tel",
+                "options": "placeholder \"+34 600 000 000\""
+            },
+            {
+                "name": "tipo_institucion",
+                "type": "text",
+                "options": "placeholder \"Escuela, Universidad, Centro técnico…\""
+            },
+            {
+                "name": "numero_estudiantes",
+                "type": "number",
+                "options": "min:0 placeholder \"Ej: 1200\""
+            },
+            {
+                "name": "pais_otro",
+                "type": "text",
+                "options": "class:mc-pais-otro placeholder \"Escribe tu país\""
+            }
+        ]
+    },
+    {
+        "id": 3069,
+        "title": "Registro Maestros o mentores",
+        "fields": [
+            {
+                "name": "perfil",
+                "type": "hidden",
+                "options": "\"mentor\""
+            },
+            {
+                "name": "next_step",
+                "type": "hidden",
+                "options": "\"confirmacion\""
+            },
+            {
+                "name": "pais_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ciudad_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "nombre",
+                "type": "text",
+                "options": "placeholder \"Nombre completo\""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": "placeholder \"Email\""
+            },
+            {
+                "name": "institucion",
+                "type": "text",
+                "options": "placeholder \"Institución\""
+            },
+            {
+                "name": "especialidad",
+                "type": "text",
+                "options": "placeholder \"Área o especialidad\""
+            },
+            {
+                "name": "pais_otro",
+                "type": "text",
+                "options": "class:mc-pais-otro placeholder \"Escribe tu país\""
+            }
+        ]
+    },
+    {
+        "id": 2759,
+        "title": "Registro Zer",
+        "fields": [
+            {
+                "name": "perfil",
+                "type": "hidden",
+                "options": "\"zer\""
+            },
+            {
+                "name": "next_step",
+                "type": "hidden",
+                "options": "\"confirmacion\""
+            },
+            {
+                "name": "monto",
+                "type": "hidden",
+                "options": "\"29\""
+            },
+            {
+                "name": "pais_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "ciudad_cf7",
+                "type": "hidden",
+                "options": ""
+            },
+            {
+                "name": "nombre",
+                "type": "text",
+                "options": "placeholder \"Nombre completo\""
+            },
+            {
+                "name": "fecha_nacimiento",
+                "type": "date",
+                "options": ""
+            },
+            {
+                "name": "institucion",
+                "type": "text",
+                "options": "placeholder \"Institución\""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": "placeholder \"Email\""
+            },
+            {
+                "name": "pais_otro",
+                "type": "text",
+                "options": "class:mc-pais-otro placeholder \"Escribe tu país\""
+            }
+        ]
+    },
+    {
+        "id": 2758,
+        "title": "Formulario de contacto 1",
+        "fields": [
+            {
+                "name": "nombre",
+                "type": "text",
+                "options": ""
+            },
+            {
+                "name": "email",
+                "type": "email",
+                "options": ""
+            }
+        ]
+    }
+]

@@ -1,0 +1,85 @@
+{
+    "info": {
+        "name": "Leads",
+        "state": "active",
+        "description": null
+    },
+    "groups": [
+        {
+            "id": "topics",
+            "title": "Leads nuevos"
+        }
+    ],
+    "columns": [
+        {
+            "title": "Nombre",
+            "id": "name",
+            "type": "name"
+        },
+        {
+            "title": "Estado",
+            "id": "lead_status",
+            "type": "status"
+        },
+        {
+            "title": "Crear un contacto",
+            "id": "button",
+            "type": "button"
+        },
+        {
+            "title": "Empresa",
+            "id": "lead_company",
+            "type": "text"
+        },
+        {
+            "title": "Puesto",
+            "id": "text",
+            "type": "text"
+        },
+        {
+            "title": "E-mail",
+            "id": "lead_email",
+            "type": "email"
+        },
+        {
+            "title": "Tel\u00e9fono",
+            "id": "lead_phone",
+            "type": "phone"
+        },
+        {
+            "title": "\u00daltima interacci\u00f3n",
+            "id": "date_mknjpaef",
+            "type": "date"
+        },
+        {
+            "title": "Secuencias activas",
+            "id": "enrolled_sequences_mkn36hnq",
+            "type": "unsupported"
+        },
+        {
+            "title": "Cronograma de actividades",
+            "id": "custom_mkt2ktmt",
+            "type": "unsupported"
+        },
+        {
+            "title": "Lead Score",
+            "id": "numeric_mkyn2py0",
+            "type": "numbers"
+        },
+        {
+            "title": "Clasificaci\u00f3n",
+            "id": "color_mkyn199t",
+            "type": "status"
+        },
+        {
+            "title": "Rol Detectado",
+            "id": "color_mkyng649",
+            "type": "status"
+        },
+        {
+            "title": "Pa\u00eds",
+            "id": "text_mkyn95hk",
+            "type": "text"
+        }
+    ]
+}

@@ -1,0 +1,72 @@
+[
+    {
+        "id": "name",
+        "title": "Nombre",
+        "type": "name"
+    },
+    {
+        "id": "lead_status",
+        "title": "Estado",
+        "type": "status"
+    },
+    {
+        "id": "button",
+        "title": "Crear un contacto",
+        "type": "button"
+    },
+    {
+        "id": "lead_company",
+        "title": "Empresa",
+        "type": "text"
+    },
+    {
+        "id": "text",
+        "title": "Puesto",
+        "type": "text"
+    },
+    {
+        "id": "lead_email",
+        "title": "E-mail",
+        "type": "email"
+    },
+    {
+        "id": "lead_phone",
+        "title": "Tel\u00e9fono",
+        "type": "phone"
+    },
+    {
+        "id": "date_mknjpaef",
+        "title": "\u00daltima interacci\u00f3n",
+        "type": "date"
+    },
+    {
+        "id": "enrolled_sequences_mkn36hnq",
+        "title": "Secuencias activas",
+        "type": "unsupported"
+    },
+    {
+        "id": "custom_mkt2ktmt",
+        "title": "Cronograma de actividades",
+        "type": "unsupported"
+    },
+    {
+        "id": "numeric_mkyn2py0",
+        "title": "Lead Score",
+        "type": "numbers"
+    },
+    {
+        "id": "color_mkyn199t",
+        "title": "Clasificaci\u00f3n",
+        "type": "status"
+    },
+    {
+        "id": "color_mkyng649",
+        "title": "Rol Detectado",
+        "type": "status"
+    },
+    {
+        "id": "text_mkyn95hk",
+        "title": "Pa\u00eds",
+        "type": "text"
+    }
+]
