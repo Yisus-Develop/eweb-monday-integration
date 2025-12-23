@@ -1,0 +1,53 @@
+2025-12-16 02:45:31 - Datos: Array
+(
+    [perfil] => pioneer
+    [contact_name] => Adelino de Almeida
+    [email] => pioneer@example.com
+    [pais_cf7] => Portugal
+    [phone] => 123456789
+)
+
+2025-12-16 02:45:33 - Datos: Array
+(
+    [perfil] => institucion
+    [nombre] => Dra. Ana Miller
+    [ea_email] => rectora@universidadgrande.edu
+    [tipo_institucion] => Universidad
+    [numero_estudiantes] => 5000
+    [pais_otro] => México
+)
+
+2025-12-16 02:45:35 - Datos: Array
+(
+    [perfil] => ciudad
+    [your-name] => Alcalde Juan Pérez
+    [your-email] => alcalde@ciudadgrande.gov
+    [poblacion] => 500000
+    [pais_cf7] => Colombia
+)
+
+2025-12-16 02:45:36 - Datos: Array
+(
+    [perfil] => empresa
+    [company] => Innovate Corp
+    [contact_name] => Laura Smith
+    [email] => laura.s@innovate.com
+    [modality] => Donación
+)
+
+2025-12-16 02:45:38 - Datos: Array
+(
+    [perfil] => general
+    [your-name] => Carlos Diaz
+    [your-email] => carlos.d@email.com
+    [pais_cf7] => Argentina
+)
+
+2025-12-16 02:45:40 - Datos: Array
+(
+    [perfil] => mentor
+    [nombre] => Profesor Ricardo
+    [email] => ricardo.teacher@school.org
+    [pais_cf7] => Chile
+)
+

@@ -1,0 +1,45 @@
+{
+  "default_language": "es",
+  "iso_mapping": {
+    "España": "ES",
+    "México": "MX",
+    "Colombia": "CO",
+    "Argentina": "AR",
+    "Chile": "CL",
+    "Perú": "PE",
+    "Venezuela": "VE",
+    "Ecuador": "EC",
+    "Guatemala": "GT",
+    "Cuba": "CU",
+    "Bolivia": "BO",
+    "República Dominicana": "DO",
+    "Honduras": "HN",
+    "El Salvador": "SV",
+    "Nicaragua": "NI",
+    "Paraguay": "PY",
+    "Costa Rica": "CR",
+    "Uruguay": "UY",
+    "Puerto Rico": "PR",
+    "Panamá": "PA",
+    "United States": "US",
+    "United Kingdom": "GB",
+    "Canada": "CA",
+    "Australia": "AU",
+    "Portugal": "PT",
+    "Brasil": "BR"
+  },
+  "languages": {
+    "es": {
+      "name": "Español",
+      "countries": ["España", "México", "Colombia", "Argentina", "Chile", "Perú", "Venezuela", "Ecuador", "Guatemala", "Cuba", "Bolivia", "República Dominicana", "Honduras", "El Salvador", "Nicaragua", "Paraguay", "Costa Rica", "Uruguay", "Puerto Rico", "Panamá"]
+    },
+    "pt": {
+      "name": "Portugués",
+      "countries": ["Portugal", "Brasil", "Angola", "Mozambique"]
+    },
+    "en": {
+      "name": "Inglés",
+      "countries": ["United States", "United Kingdom", "Canada", "Australia", "Ireland", "New Zealand"]
+    }
+  }
+}

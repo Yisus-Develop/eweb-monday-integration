@@ -68,5 +68,50 @@
         "id": "text_mkyn95hk",
         "title": "Pa\u00eds",
         "type": "text"
+    },
+    {
+        "id": "dropdown_mkypgz6f",
+        "title": "Tipo de Lead",
+        "type": "dropdown"
+    },
+    {
+        "id": "dropdown_mkypbsmj",
+        "title": "Canal de Origen",
+        "type": "dropdown"
+    },
+    {
+        "id": "text_mkypbqgg",
+        "title": "Mission Partner",
+        "type": "text"
+    },
+    {
+        "id": "dropdown_mkypzbbh",
+        "title": "Idioma",
+        "type": "dropdown"
+    },
+    {
+        "id": "date_mkypsy6q",
+        "title": "Fecha de Entrada",
+        "type": "date"
+    },
+    {
+        "id": "date_mkypeap2",
+        "title": "Pr\u00f3xima Acci\u00f3n",
+        "type": "date"
+    },
+    {
+        "id": "date_mkyp6w4t",
+        "title": "Fecha de Entrada",
+        "type": "date"
+    },
+    {
+        "id": "date_mkyp535v",
+        "title": "Pr\u00f3xima Acci\u00f3n",
+        "type": "date"
+    },
+    {
+        "id": "long_text_mkypqppc",
+        "title": "Notas Internas",
+        "type": "long_text"
     }
 ]

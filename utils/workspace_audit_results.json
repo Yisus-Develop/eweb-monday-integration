@@ -1,0 +1,954 @@
+{
+    "total_boards": 17,
+    "boards": [
+        {
+            "id": "18392224447",
+            "name": "Subelementos de Cuentas",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "person",
+                    "title": "Owner",
+                    "type": "people"
+                },
+                {
+                    "id": "status",
+                    "title": "Estado",
+                    "type": "status"
+                },
+                {
+                    "id": "date0",
+                    "title": "Date",
+                    "type": "date"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392205837",
+            "name": "Subelementos de Lead Validation",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "person",
+                    "title": "Owner",
+                    "type": "people"
+                },
+                {
+                    "id": "status",
+                    "title": "Status",
+                    "type": "status"
+                },
+                {
+                    "id": "date0",
+                    "title": "Date",
+                    "type": "date"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392205833",
+            "name": "Lead Validation",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "subtasks_mkssjg45",
+                    "title": "Subitems",
+                    "type": "subtasks"
+                },
+                {
+                    "id": "email_mkqt7na4",
+                    "title": "Email",
+                    "type": "email"
+                },
+                {
+                    "id": "button_mkqtj4sc",
+                    "title": "Button",
+                    "type": "button"
+                },
+                {
+                    "id": "status",
+                    "title": "Mail Status",
+                    "type": "status"
+                },
+                {
+                    "id": "text_mkqtn9sh",
+                    "title": "Mail Status Reason",
+                    "type": "text"
+                },
+                {
+                    "id": "text_mkqt3wa0",
+                    "title": "Is Disposable",
+                    "type": "text"
+                },
+                {
+                    "id": "text_mkqt580j",
+                    "title": "Is Full Mail Box",
+                    "type": "text"
+                },
+                {
+                    "id": "pulse_log_mkss50xv",
+                    "title": "Creation log",
+                    "type": "creation_log"
+                },
+                {
+                    "id": "multiple_person_mkssj77b",
+                    "title": "People",
+                    "type": "people"
+                },
+                {
+                    "id": "color_mkssw86n",
+                    "title": "Status 1",
+                    "type": "status"
+                },
+                {
+                    "id": "color_mkss94jp",
+                    "title": "Lead Status",
+                    "type": "status"
+                },
+                {
+                    "id": "multiple_person_mkssryza",
+                    "title": "People 1",
+                    "type": "people"
+                },
+                {
+                    "id": "pulse_updated_mkss268r",
+                    "title": "Last updated",
+                    "type": "last_updated"
+                },
+                {
+                    "id": "columns_battery_mksspywx",
+                    "title": "Progress",
+                    "type": "progress"
+                },
+                {
+                    "id": "text_mkssnkr7",
+                    "title": "Email Body",
+                    "type": "text"
+                },
+                {
+                    "id": "numeric_mktbkfxt",
+                    "title": "Deliverability Score",
+                    "type": "numbers"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392205831",
+            "name": "Quick Start - Mail Validator",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "files",
+                    "title": "Files",
+                    "type": "file"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392205793",
+            "name": "Subelementos de Lead Validation",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "person",
+                    "title": "Owner",
+                    "type": "people"
+                },
+                {
+                    "id": "status",
+                    "title": "Status",
+                    "type": "status"
+                },
+                {
+                    "id": "date0",
+                    "title": "Date",
+                    "type": "date"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392205785",
+            "name": "Lead Validation",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "subtasks_mkssjg45",
+                    "title": "Subitems",
+                    "type": "subtasks"
+                },
+                {
+                    "id": "email_mkqt7na4",
+                    "title": "Email",
+                    "type": "email"
+                },
+                {
+                    "id": "button_mkqtj4sc",
+                    "title": "Button",
+                    "type": "button"
+                },
+                {
+                    "id": "status",
+                    "title": "Mail Status",
+                    "type": "status"
+                },
+                {
+                    "id": "text_mkqtn9sh",
+                    "title": "Mail Status Reason",
+                    "type": "text"
+                },
+                {
+                    "id": "text_mkqt3wa0",
+                    "title": "Is Disposable",
+                    "type": "text"
+                },
+                {
+                    "id": "text_mkqt580j",
+                    "title": "Is Full Mail Box",
+                    "type": "text"
+                },
+                {
+                    "id": "pulse_log_mkss50xv",
+                    "title": "Creation log",
+                    "type": "creation_log"
+                },
+                {
+                    "id": "multiple_person_mkssj77b",
+                    "title": "People",
+                    "type": "people"
+                },
+                {
+                    "id": "color_mkssw86n",
+                    "title": "Status 1",
+                    "type": "status"
+                },
+                {
+                    "id": "color_mkss94jp",
+                    "title": "Lead Status",
+                    "type": "status"
+                },
+                {
+                    "id": "multiple_person_mkssryza",
+                    "title": "People 1",
+                    "type": "people"
+                },
+                {
+                    "id": "pulse_updated_mkss268r",
+                    "title": "Last updated",
+                    "type": "last_updated"
+                },
+                {
+                    "id": "columns_battery_mksspywx",
+                    "title": "Progress",
+                    "type": "progress"
+                },
+                {
+                    "id": "text_mkssnkr7",
+                    "title": "Email Body",
+                    "type": "text"
+                },
+                {
+                    "id": "numeric_mktbkfxt",
+                    "title": "Deliverability Score",
+                    "type": "numbers"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392205784",
+            "name": "Quick Start - Mail Validator",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "files",
+                    "title": "Files",
+                    "type": "file"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392144882",
+            "name": "Subelementos de Proyectos de clientes",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "person",
+                    "title": "Owner",
+                    "type": "people"
+                },
+                {
+                    "id": "status",
+                    "title": "Status",
+                    "type": "status"
+                },
+                {
+                    "id": "date0",
+                    "title": "Date",
+                    "type": "date"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392144874",
+            "name": "Subelementos de Acuerdos",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Nombre",
+                    "type": "name"
+                },
+                {
+                    "id": "person",
+                    "title": "Responsable",
+                    "type": "people"
+                },
+                {
+                    "id": "status",
+                    "title": "Estado",
+                    "type": "status"
+                },
+                {
+                    "id": "date0",
+                    "title": "Fecha",
+                    "type": "date"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392144870",
+            "name": "Subelementos de Contactos",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "person",
+                    "title": "Owner",
+                    "type": "people"
+                },
+                {
+                    "id": "status",
+                    "title": "Status",
+                    "type": "status"
+                },
+                {
+                    "id": "date0",
+                    "title": "Date",
+                    "type": "date"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392144865",
+            "name": "Cuentas",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Nombre",
+                    "type": "name"
+                },
+                {
+                    "id": "subtasks_mkynpqm",
+                    "title": "Subelementos",
+                    "type": "subtasks"
+                },
+                {
+                    "id": "company_domain",
+                    "title": "Dominio",
+                    "type": "link"
+                },
+                {
+                    "id": "account_contact",
+                    "title": "Contactos",
+                    "type": "board_relation"
+                },
+                {
+                    "id": "account_deal",
+                    "title": "Acuerdos",
+                    "type": "mirror"
+                },
+                {
+                    "id": "industry",
+                    "title": "Sector",
+                    "type": "dropdown"
+                },
+                {
+                    "id": "company_description",
+                    "title": "Descripción",
+                    "type": "long_text"
+                },
+                {
+                    "id": "employee_count",
+                    "title": "Cant. de empleados",
+                    "type": "text"
+                },
+                {
+                    "id": "headquarters_loc",
+                    "title": "Ubicación de la sede central",
+                    "type": "text"
+                },
+                {
+                    "id": "custom_mkt2g0pj",
+                    "title": "Cronograma de actividades",
+                    "type": "unsupported"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392144864",
+            "name": "Leads",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Nombre",
+                    "type": "name"
+                },
+                {
+                    "id": "lead_status",
+                    "title": "Estado",
+                    "type": "status"
+                },
+                {
+                    "id": "button",
+                    "title": "Crear un contacto",
+                    "type": "button"
+                },
+                {
+                    "id": "lead_company",
+                    "title": "Empresa",
+                    "type": "text"
+                },
+                {
+                    "id": "text",
+                    "title": "Puesto",
+                    "type": "text"
+                },
+                {
+                    "id": "lead_email",
+                    "title": "E-mail",
+                    "type": "email"
+                },
+                {
+                    "id": "lead_phone",
+                    "title": "Teléfono",
+                    "type": "phone"
+                },
+                {
+                    "id": "date_mknjpaef",
+                    "title": "Última interacción",
+                    "type": "date"
+                },
+                {
+                    "id": "enrolled_sequences_mkn36hnq",
+                    "title": "Secuencias activas",
+                    "type": "unsupported"
+                },
+                {
+                    "id": "custom_mkt2ktmt",
+                    "title": "Cronograma de actividades",
+                    "type": "unsupported"
+                },
+                {
+                    "id": "numeric_mkyn2py0",
+                    "title": "Lead Score",
+                    "type": "numbers"
+                },
+                {
+                    "id": "color_mkyng649",
+                    "title": "Rol Detectado",
+                    "type": "status"
+                },
+                {
+                    "id": "text_mkyn95hk",
+                    "title": "País",
+                    "type": "text"
+                },
+                {
+                    "id": "dropdown_mkypgz6f",
+                    "title": "Tipo de Lead",
+                    "type": "dropdown"
+                },
+                {
+                    "id": "dropdown_mkypbsmj",
+                    "title": "Canal de Origen",
+                    "type": "dropdown"
+                },
+                {
+                    "id": "text_mkypbqgg",
+                    "title": "Mission Partner",
+                    "type": "text"
+                },
+                {
+                    "id": "dropdown_mkypzbbh",
+                    "title": "Idioma",
+                    "type": "dropdown"
+                },
+                {
+                    "id": "date_mkypsy6q",
+                    "title": "Fecha de Entrada",
+                    "type": "date"
+                },
+                {
+                    "id": "date_mkypeap2",
+                    "title": "Próxima Acción",
+                    "type": "date"
+                },
+                {
+                    "id": "date_mkyp6w4t",
+                    "title": "Fecha de Entrada",
+                    "type": "date"
+                },
+                {
+                    "id": "date_mkyp535v",
+                    "title": "Próxima Acción",
+                    "type": "date"
+                },
+                {
+                    "id": "long_text_mkypqppc",
+                    "title": "Notas Internas",
+                    "type": "long_text"
+                },
+                {
+                    "id": "color_mkypv3rg",
+                    "title": "Clasificación",
+                    "type": "status"
+                },
+                {
+                    "id": "dropdown_mkyp8q98",
+                    "title": "Tipo de Lead",
+                    "type": "dropdown"
+                },
+                {
+                    "id": "dropdown_mkypf16c",
+                    "title": "Canal de Origen",
+                    "type": "dropdown"
+                },
+                {
+                    "id": "text_mkypn0m",
+                    "title": "Mission Partner",
+                    "type": "text"
+                },
+                {
+                    "id": "dropdown_mkyps472",
+                    "title": "Idioma",
+                    "type": "dropdown"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392144863",
+            "name": "Acuerdos",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Nombre",
+                    "type": "name"
+                },
+                {
+                    "id": "subitems",
+                    "title": "Tareas",
+                    "type": "subtasks"
+                },
+                {
+                    "id": "custom_mkswh7yh",
+                    "title": "Cronograma de actividades",
+                    "type": "unsupported"
+                },
+                {
+                    "id": "deal_stage",
+                    "title": "Etapa",
+                    "type": "status"
+                },
+                {
+                    "id": "deal_owner",
+                    "title": "Resp.",
+                    "type": "people"
+                },
+                {
+                    "id": "deal_value",
+                    "title": "Valor del acuerdo",
+                    "type": "numbers"
+                },
+                {
+                    "id": "deal_contact",
+                    "title": "Contactos",
+                    "type": "board_relation"
+                },
+                {
+                    "id": "deal_expected_close_date",
+                    "title": "Fecha estimada de cierre",
+                    "type": "date"
+                },
+                {
+                    "id": "deal_close_probability",
+                    "title": "Probabilidad de cierre",
+                    "type": "numbers"
+                },
+                {
+                    "id": "deal_forecast_value",
+                    "title": "Valor previsto",
+                    "type": "formula"
+                },
+                {
+                    "id": "board_relation",
+                    "title": "Enlace a proyectos de clientes",
+                    "type": "board_relation"
+                },
+                {
+                    "id": "custom_mknwgnfv",
+                    "title": "Presupuestos y facturas",
+                    "type": "unsupported"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392144862",
+            "name": "Contactos",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Nombre",
+                    "type": "name"
+                },
+                {
+                    "id": "subelementos",
+                    "title": "Subelementos",
+                    "type": "subtasks"
+                },
+                {
+                    "id": "contact_email",
+                    "title": "E-mail",
+                    "type": "email"
+                },
+                {
+                    "id": "custom_mkngf42s",
+                    "title": "Cronograma de actividades",
+                    "type": "unsupported"
+                },
+                {
+                    "id": "contact_account",
+                    "title": "Cuentas",
+                    "type": "board_relation"
+                },
+                {
+                    "id": "contact_deal",
+                    "title": "Acuerdos",
+                    "type": "board_relation"
+                },
+                {
+                    "id": "mirror2",
+                    "title": "Valor del acuerdo",
+                    "type": "mirror"
+                },
+                {
+                    "id": "contact_phone",
+                    "title": "Teléfono",
+                    "type": "phone"
+                },
+                {
+                    "id": "texto",
+                    "title": "Puesto",
+                    "type": "text"
+                },
+                {
+                    "id": "status",
+                    "title": "Tipo",
+                    "type": "status"
+                },
+                {
+                    "id": "status5",
+                    "title": "Prioridad",
+                    "type": "status"
+                },
+                {
+                    "id": "long_text4",
+                    "title": "Comentarios",
+                    "type": "long_text"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392144861",
+            "name": "Actividades",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Nombre",
+                    "type": "name"
+                },
+                {
+                    "id": "activity_type",
+                    "title": "Tipo de actividad",
+                    "type": "status"
+                },
+                {
+                    "id": "activity_owner",
+                    "title": "Resp.",
+                    "type": "people"
+                },
+                {
+                    "id": "activity_start_time",
+                    "title": "Hora de inicio",
+                    "type": "date"
+                },
+                {
+                    "id": "activity_end_time",
+                    "title": "Hora de finalización",
+                    "type": "date"
+                },
+                {
+                    "id": "activity_status",
+                    "title": "Estado",
+                    "type": "status"
+                },
+                {
+                    "id": "activity_item",
+                    "title": "Elemento relacionado",
+                    "type": "board_relation"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392144860",
+            "name": "Productos y servicios",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "product_and_service_description",
+                    "title": "Descripción",
+                    "type": "long_text"
+                },
+                {
+                    "id": "product_and_service_price",
+                    "title": "Precio",
+                    "type": "numbers"
+                },
+                {
+                    "id": "product_and_service_sku",
+                    "title": "Código SKU",
+                    "type": "text"
+                },
+                {
+                    "id": "product_and_service_type",
+                    "title": "Tipo",
+                    "type": "status"
+                }
+            ],
+            "read_success": true
+        },
+        {
+            "id": "18392144859",
+            "name": "Proyectos de clientes",
+            "state": "active",
+            "permissions": "everyone",
+            "columns": [
+                {
+                    "id": "name",
+                    "title": "Name",
+                    "type": "name"
+                },
+                {
+                    "id": "subitems",
+                    "title": "Subitems",
+                    "type": "subtasks"
+                },
+                {
+                    "id": "project_owner",
+                    "title": "Responsable",
+                    "type": "people"
+                },
+                {
+                    "id": "project_prority",
+                    "title": "Prioridad",
+                    "type": "status"
+                },
+                {
+                    "id": "project_timeline",
+                    "title": "Cronograma",
+                    "type": "timeline"
+                },
+                {
+                    "id": "project_status",
+                    "title": "Estado",
+                    "type": "status"
+                },
+                {
+                    "id": "project_opportunity",
+                    "title": "Acuerdos",
+                    "type": "board_relation"
+                },
+                {
+                    "id": "project_contact",
+                    "title": "Contactos",
+                    "type": "board_relation"
+                },
+                {
+                    "id": "connect_boards",
+                    "title": "Cuentas",
+                    "type": "board_relation"
+                }
+            ],
+            "read_success": true
+        }
+    ],
+    "operations_summary": {
+        "read_attempts": 17,
+        "read_success": 17,
+        "create_attempts": 11,
+        "create_success": 10,
+        "update_attempts": 10,
+        "update_success": 0,
+        "errors": [
+            {
+                "board_id": "18392205833",
+                "board_name": "Lead Validation",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"Cannot query field \\\"update_item\\\" on type \\\"Mutation\\\". Did you mean \\\"create_item\\\", \\\"update_form\\\", \\\"update_view\\\", \\\"delete_item\\\", or \\\"duplicate_item\\\"?\",\"locations\":[{\"line\":2,\"column\":13}]}]"
+            },
+            {
+                "board_id": "18392205831",
+                "board_name": "Quick Start - Mail Validator",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"Cannot query field \\\"update_item\\\" on type \\\"Mutation\\\". Did you mean \\\"create_item\\\", \\\"update_form\\\", \\\"update_view\\\", \\\"delete_item\\\", or \\\"duplicate_item\\\"?\",\"locations\":[{\"line\":2,\"column\":13}]}]"
+            },
+            {
+                "board_id": "18392205785",
+                "board_name": "Lead Validation",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"Cannot query field \\\"update_item\\\" on type \\\"Mutation\\\". Did you mean \\\"create_item\\\", \\\"update_form\\\", \\\"update_view\\\", \\\"delete_item\\\", or \\\"duplicate_item\\\"?\",\"locations\":[{\"line\":2,\"column\":13}]}]"
+            },
+            {
+                "board_id": "18392205784",
+                "board_name": "Quick Start - Mail Validator",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"Cannot query field \\\"update_item\\\" on type \\\"Mutation\\\". Did you mean \\\"create_item\\\", \\\"update_form\\\", \\\"update_view\\\", \\\"delete_item\\\", or \\\"duplicate_item\\\"?\",\"locations\":[{\"line\":2,\"column\":13}]}]"
+            },
+            {
+                "board_id": "18392144865",
+                "board_name": "Cuentas",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"The dropdown column parameters are an array of ids or labels\",\"locations\":[{\"line\":1,\"column\":69}],\"path\":[\"create_item\"],\"extensions\":{\"code\":\"ColumnValueException\",\"status_code\":200,\"error_data\":{\"column_value\":\"{\\\"label\\\"=>{\\\"id\\\"=>2, \\\"name\\\"=>\\\"Financial Services\\\"}}\"},\"service\":\"monolith\"}}]"
+            },
+            {
+                "board_id": "18392144864",
+                "board_name": "Leads",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"Cannot query field \\\"update_item\\\" on type \\\"Mutation\\\". Did you mean \\\"create_item\\\", \\\"update_form\\\", \\\"update_view\\\", \\\"delete_item\\\", or \\\"duplicate_item\\\"?\",\"locations\":[{\"line\":2,\"column\":13}]}]"
+            },
+            {
+                "board_id": "18392144863",
+                "board_name": "Acuerdos",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"Cannot query field \\\"update_item\\\" on type \\\"Mutation\\\". Did you mean \\\"create_item\\\", \\\"update_form\\\", \\\"update_view\\\", \\\"delete_item\\\", or \\\"duplicate_item\\\"?\",\"locations\":[{\"line\":2,\"column\":13}]}]"
+            },
+            {
+                "board_id": "18392144862",
+                "board_name": "Contactos",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"Cannot query field \\\"update_item\\\" on type \\\"Mutation\\\". Did you mean \\\"create_item\\\", \\\"update_form\\\", \\\"update_view\\\", \\\"delete_item\\\", or \\\"duplicate_item\\\"?\",\"locations\":[{\"line\":2,\"column\":13}]}]"
+            },
+            {
+                "board_id": "18392144861",
+                "board_name": "Actividades",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"Cannot query field \\\"update_item\\\" on type \\\"Mutation\\\". Did you mean \\\"create_item\\\", \\\"update_form\\\", \\\"update_view\\\", \\\"delete_item\\\", or \\\"duplicate_item\\\"?\",\"locations\":[{\"line\":2,\"column\":13}]}]"
+            },
+            {
+                "board_id": "18392144860",
+                "board_name": "Productos y servicios",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"Cannot query field \\\"update_item\\\" on type \\\"Mutation\\\". Did you mean \\\"create_item\\\", \\\"update_form\\\", \\\"update_view\\\", \\\"delete_item\\\", or \\\"duplicate_item\\\"?\",\"locations\":[{\"line\":2,\"column\":13}]}]"
+            },
+            {
+                "board_id": "18392144859",
+                "board_name": "Proyectos de clientes",
+                "operation": "create_item",
+                "error": "Error Monday API: [{\"message\":\"Cannot query field \\\"update_item\\\" on type \\\"Mutation\\\". Did you mean \\\"create_item\\\", \\\"update_form\\\", \\\"update_view\\\", \\\"delete_item\\\", or \\\"duplicate_item\\\"?\",\"locations\":[{\"line\":2,\"column\":13}]}]"
+            }
+        ]
+    }
+}

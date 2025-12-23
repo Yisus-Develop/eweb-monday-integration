@@ -2,7 +2,7 @@
 // scan-workspace.php
 // Objetivo: Listar TODOS los tableros del Workspace para ver qué infraestructura existe ya.
 
-require_once 'config.php';
+require_once '../config.php';
 require_once 'MondayAPI.php';
 
 $workspaceId = 13608938; // ID confirmado por el usuario

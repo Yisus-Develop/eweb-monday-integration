@@ -1,6 +1,6 @@
 <?php
 // verify-connection.php (Enhanced)
-require_once 'config.php';
+require_once '../config.php';
 require_once 'MondayAPI.php';
 
 echo "--- Diagnóstico Avanzado de Monday API ---\n";

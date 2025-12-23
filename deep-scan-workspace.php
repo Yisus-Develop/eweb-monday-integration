@@ -3,7 +3,7 @@
 // Objetivo: Escaneo recursivo y profundo de TODO el Workspace (Tableros -> Grupos -> Columnas)
 // Genera un reporte detallado para decidir reutilización.
 
-require_once 'config.php';
+require_once '../config.php';
 require_once 'MondayAPI.php';
 
 $workspaceId = 13608938;

@@ -1,6 +1,6 @@
 <?php
 // check-workspace.php
-require_once 'config.php';
+require_once '../config.php';
 require_once 'MondayAPI.php';
 
 $monday = new MondayAPI(MONDAY_API_TOKEN);

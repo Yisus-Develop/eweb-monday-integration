@@ -1,0 +1,178 @@
+[
+    {
+        "id": "10778926291",
+        "name": "El\u00edas Gutierrez",
+        "group": {
+            "id": "topics",
+            "title": "Leads nuevos"
+        },
+        "column_values": [
+            {
+                "id": "lead_status",
+                "type": "status",
+                "text": "Contactado",
+                "value": "{\"index\":14,\"post_id\":null,\"changed_at\":\"2022-12-06T11:42:57.702Z\"}"
+            },
+            {
+                "id": "button",
+                "type": "button",
+                "text": "Mover a contactos",
+                "value": null
+            },
+            {
+                "id": "lead_company",
+                "type": "text",
+                "text": "Agently S.A.",
+                "value": "\"Agently S.A.\""
+            },
+            {
+                "id": "text",
+                "type": "text",
+                "text": "COO",
+                "value": "\"COO\""
+            },
+            {
+                "id": "lead_email",
+                "type": "email",
+                "text": "egutierrez@mail.com",
+                "value": "{\"text\":\"egutierrez@mail.com\",\"email\":\"egutierrez@mail.com\",\"changed_at\":\"2022-07-31T13:57:14.736Z\"}"
+            },
+            {
+                "id": "lead_phone",
+                "type": "phone",
+                "text": "576073651234",
+                "value": "{\"phone\":\"576073651234\",\"changed_at\":\"2022-07-28T09:42:18.386Z\",\"countryShortName\":\"CO\"}"
+            },
+            {
+                "id": "date_mknjpaef",
+                "type": "date",
+                "text": "2024-02-10",
+                "value": "{\"date\":\"2024-02-10\",\"changed_at\":\"2025-02-27T16:01:48.006Z\"}"
+            },
+            {
+                "id": "enrolled_sequences_mkn36hnq",
+                "type": "unsupported",
+                "text": "",
+                "value": null
+            },
+            {
+                "id": "custom_mkt2ktmt",
+                "type": "unsupported",
+                "text": "",
+                "value": null
+            },
+            {
+                "id": "numeric_mkyn2py0",
+                "type": "numbers",
+                "text": "",
+                "value": null
+            },
+            {
+                "id": "color_mkyn199t",
+                "type": "status",
+                "text": null,
+                "value": null
+            },
+            {
+                "id": "color_mkyng649",
+                "type": "status",
+                "text": null,
+                "value": null
+            },
+            {
+                "id": "text_mkyn95hk",
+                "type": "text",
+                "text": "",
+                "value": null
+            }
+        ]
+    },
+    {
+        "id": "10778966995",
+        "name": "Esteban Garc\u00eda",
+        "group": {
+            "id": "topics",
+            "title": "Leads nuevos"
+        },
+        "column_values": [
+            {
+                "id": "lead_status",
+                "type": "status",
+                "text": "Lead nuevo",
+                "value": "{\"index\":0,\"post_id\":null,\"changed_at\":\"2022-12-06T11:43:43.124Z\"}"
+            },
+            {
+                "id": "button",
+                "type": "button",
+                "text": "Mover a contactos",
+                "value": null
+            },
+            {
+                "id": "lead_company",
+                "type": "text",
+                "text": "Microsoft",
+                "value": "\"Microsoft\""
+            },
+            {
+                "id": "text",
+                "type": "text",
+                "text": "L\u00edder de equipo",
+                "value": "\"L\u00edder de equipo\""
+            },
+            {
+                "id": "lead_email",
+                "type": "email",
+                "text": "estegarcia@microsoft.com",
+                "value": "{\"text\":\"estegarcia@microsoft.com\",\"email\":\"estegarcia@microsoft.com\",\"changed_at\":\"2025-02-27T16:04:12.492Z\"}"
+            },
+            {
+                "id": "lead_phone",
+                "type": "phone",
+                "text": "575873851274",
+                "value": "{\"phone\":\"575873851274\",\"changed_at\":\"2025-02-27T16:02:54.735Z\",\"countryShortName\":\"AR\"}"
+            },
+            {
+                "id": "date_mknjpaef",
+                "type": "date",
+                "text": "2023-11-28",
+                "value": "{\"date\":\"2023-11-28\",\"changed_at\":\"2025-02-27T16:02:08.695Z\"}"
+            },
+            {
+                "id": "enrolled_sequences_mkn36hnq",
+                "type": "unsupported",
+                "text": "",
+                "value": null
+            },
+            {
+                "id": "custom_mkt2ktmt",
+                "type": "unsupported",
+                "text": "",
+                "value": null
+            },
+            {
+                "id": "numeric_mkyn2py0",
+                "type": "numbers",
+                "text": "",
+                "value": null
+            },
+            {
+                "id": "color_mkyn199t",
+                "type": "status",
+                "text": null,
+                "value": null
+            },
+            {
+                "id": "color_mkyng649",
+                "type": "status",
+                "text": null,
+                "value": null
+            },
+            {
+                "id": "text_mkyn95hk",
+                "type": "text",
+                "text": "",
+                "value": null
+            }
+        ]
+    }
+]

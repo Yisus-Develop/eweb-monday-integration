@@ -2,7 +2,7 @@
 // inspect-monday-board.php
 // Script de Auditoría Profunda del Tablero Monday
 
-require_once 'config.php';
+require_once '../config.php';
 require_once 'MondayAPI.php';
 
 echo "--- Auditoría de Tablero Monday (ID: " . MONDAY_BOARD_ID . ") ---\n";

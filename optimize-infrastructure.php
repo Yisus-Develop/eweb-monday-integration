@@ -4,7 +4,7 @@
 // 1. Renombrar Tablero.
 // 2. Crear Columnas faltantes (Score, Clasificación, Rol, País).
 
-require_once 'config.php';
+require_once '../config.php';
 require_once 'MondayAPI.php';
 
 $monday = new MondayAPI(MONDAY_API_TOKEN);
