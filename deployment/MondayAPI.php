@@ -26,26 +26,25 @@ class MondayAPI {
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-        $payload = json_encode($data);
         $response = curl_exec($ch);
         
         if (curl_errno($ch)) {
             throw new Exception('Error cURL: ' . curl_error($ch));
         }
+
         curl_close($ch);
 
         $json = json_decode($response, true);
 
         if (isset($json['errors'])) {
-            file_put_contents(__DIR__ . '/last_error.json', $response);
-            throw new Exception("Error Monday API detectado. Ver last_error.json");
+            throw new Exception('Error Monday API: ' . json_encode($json['errors']));
         }
 
         return $json['data'];
     }
 
     public function createItem($boardId, $itemName, $columnValues = [], $groupId = null) {
-        $query = 'mutation ($boardId: ID!, $itemName: String!, $columnValues: JSON, $groupId: String) {
+        $query = 'mutation ($boardId: ID!, $itemName: String!, $columnValues: JSON!, $groupId: String) {
             create_item (board_id: $boardId, item_name: $itemName, column_values: $columnValues, group_id: $groupId) {
                 id
             }
@@ -54,7 +53,7 @@ class MondayAPI {
         $variables = [
             'boardId' => (int)$boardId,
             'itemName' => $itemName,
-            'columnValues' => is_array($columnValues) ? json_encode($columnValues) : $columnValues, 
+            'columnValues' => json_encode($columnValues),
             'groupId' => $groupId
         ];
 
@@ -170,7 +169,7 @@ class MondayAPI {
     }
 
     public function updateItem($boardId, $itemId, $columnValues) {
-        $query = 'mutation ($boardId: ID!, $itemId: ID!, $columnValues: JSON) {
+        $query = 'mutation ($boardId: ID!, $itemId: ID!, $columnValues: JSON!) {
             update_item (board_id: $boardId, item_id: $itemId, column_values: $columnValues) {
                 id
             }
@@ -179,7 +178,7 @@ class MondayAPI {
         $variables = [
             'boardId' => (int)$boardId,
             'itemId' => (int)$itemId,
-            'columnValues' => is_array($columnValues) ? json_encode($columnValues) : $columnValues
+            'columnValues' => json_encode($columnValues)
         ];
 
         return $this->query($query, $variables);
@@ -236,8 +235,7 @@ class MondayAPI {
     }
 
     public function changeColumnValue($boardId, $itemId, $columnId, $value) {
-        // En Monday API v2023-10+, la variable debe ser JSON
-        // pero el contenido DEBE ser un string JSON (double encode).
+        // Primero intentamos con change_column_value
         $query = 'mutation ($boardId: ID!, $itemId: ID!, $columnId: String!, $value: JSON!) {
             change_column_value (board_id: $boardId, item_id: $itemId, column_id: $columnId, value: $value) {
                 id
@@ -248,7 +246,7 @@ class MondayAPI {
             'boardId' => (int)$boardId,
             'itemId' => (int)$itemId,
             'columnId' => $columnId,
-            'value' => json_encode($value) 
+            'value' => json_encode($value)
         ];
 
         return $this->query($query, $variables);
@@ -295,6 +293,22 @@ class MondayAPI {
             'boardId' => (int)$boardId,
             'itemId' => (int)$itemId,
             'columnValues' => $columnValues
+        ];
+
+        return $this->query($query, $variables);
+    }
+
+    public function changeColumnTitle($boardId, $columnId, $title) {
+        $query = 'mutation ($boardId: ID!, $columnId: String!, $title: String!) {
+            change_column_title (board_id: $boardId, column_id: $columnId, title: $title) {
+                id
+            }
+        }';
+
+        $variables = [
+            'boardId' => (int)$boardId,
+            'columnId' => $columnId,
+            'title' => $title
         ];
 
         return $this->query($query, $variables);

@@ -132,13 +132,13 @@ class LeadScoring {
     
     private static function mapPerfilToTipoLead($perfil) {
         $map = [
-            'institucion' => 'Universidad',
-            'ciudad' => 'Otro',        // Monday no tiene 'Ciudad' en el dropdown
-            'empresa' => 'Empresa',
-            'pioneer' => 'Otro',        // Monday no tiene 'Mission Partner' en este dropdown
-            'mentor' => 'Otro',
-            'pais' => 'Otro',
-            'zer' => 'Otro',
+            'institucion' => 'Aliado',
+            'ciudad' => 'Aliado',
+            'empresa' => 'Aliado',
+            'pioneer' => 'Aliado',
+            'mentor' => 'Prensa',
+            'pais' => 'Competición',
+            'zer' => 'Competición',
             'general' => 'Otro'
         ];
         

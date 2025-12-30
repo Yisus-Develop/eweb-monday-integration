@@ -2,7 +2,7 @@
 // final-webhook-handler.php
 // Webhook handler final con formato correcto para todas las columnas
 
-require_once '../config.php';
+require_once 'config.php';
 require_once 'MondayAPI.php';
 require_once 'LeadScoring.php';
 require_once 'NewColumnIds.php';

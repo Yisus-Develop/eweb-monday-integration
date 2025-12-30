@@ -1,20 +1,30 @@
 <?php
-// NewColumnIds.php - Versión Production-Ready Final
+// NewColumnIds.php
+// Nuevos IDs de columnas para el tablero de Contactos (18392144862)
+
 class NewColumnIds {
-    const CLASSIFICATION_STATUS = 'classification_status';
-    const ROLE_DETECTED = 'role_detected_new';
-    const TYPE_OF_LEAD = 'dropdown_mkywgchz'; // Tipo de Lead V2
-    const RAW_DATA_JSON = 'long_text_mkyxhent'; // Respaldo RAW (JSON)
-    const SOURCE_CHANNEL = 'source_channel';
-    const LANGUAGE = 'language';
+    const EMAIL = 'contact_email';
+    const PHONE = 'contact_phone';
+    const PUESTO = 'texto';
+    const STATUS = 'status';
     
-    const LEAD_EMAIL = 'lead_email';
-    const NUMERIC_SCORE = 'numeric_mkyn2py0';
-    const COUNTRY_TEXT = 'text_mkyn95hk';
-    const LEAD_COMPANY = 'lead_company';
-    const ROLE_TEXT = 'text';
-    const LEAD_PHONE = 'lead_phone';
-    const LEAD_STATUS = 'lead_status';
-    const DATE_CREATED = 'date_mkyp6w4t';
+    // Columnas de negocio armonizadas
+    const LEAD_SCORE = 'numeric_mkz3ds8m';
+    const CLASSIFICATION = 'color_mkz3yyj8';
+    const ROLE_DETECTED = 'color_mkz3176k'; // Ahora "Perfil Detectado"
+    const COUNTRY = 'text_mkz3vvqv';
+    const MISSION_PARTNER = 'text_mkz3epfe'; // DEPRECATED: Se eliminará o renombrará
+    const ENTRY_DATE = 'date_mkz3bbqb';
+    const NEXT_ACTION = 'date_mkz3devn'; // Ahora "Seguimiento"
+    const TYPE_OF_LEAD = 'dropdown_mkz3my1q'; // Ahora "Categoría"
+    const SOURCE_CHANNEL = 'dropdown_mkz3jgsb'; // Ahora "Origen"
+    const LANGUAGE = 'dropdown_mkz37gb6';
+    
+    // Nuevas columnas solicitadas
+    const AMOUNT = 'numeric_mkz36drs';
+    const CITY = 'text_mkz3w9bk';
+    const INST_TYPE = 'color_mkz3pvz9'; // Ahora "Entidad"
+    const INTERNAL_NOTES = 'long_text_mkz360cv'; // Ahora "Análisis IA"
+    const COMMENTS = 'long_text4'; // Ahora "Resumen del Formulario"
 }
 ?>

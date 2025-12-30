@@ -297,4 +297,20 @@ class MondayAPI {
 
         return $this->query($query, $variables);
     }
+
+    public function changeColumnTitle($boardId, $columnId, $title) {
+        $query = 'mutation ($boardId: ID!, $columnId: String!, $title: String!) {
+            change_column_title (board_id: $boardId, column_id: $columnId, title: $title) {
+                id
+            }
+        }';
+
+        $variables = [
+            'boardId' => (int)$boardId,
+            'columnId' => $columnId,
+            'title' => $title
+        ];
+
+        return $this->query($query, $variables);
+    }
 }

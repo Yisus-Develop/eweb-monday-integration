@@ -37,8 +37,6 @@ function monday_integration_create_db() {
 }
 
 function monday_trigger_webhook_on_sent($contact_form) {
-    if ($contact_form->id() == 5410) return; // Excluir suscripción
-
     $submission = WPCF7_Submission::get_instance();
     if (!$submission) return;
 
@@ -50,7 +48,7 @@ function monday_trigger_webhook_on_sent($contact_form) {
 function monday_send_to_handler($data, $source = "Manual Test") {
     global $wpdb;
     $table_name = $wpdb->prefix . 'monday_leads_log';
-    $webhook_url = content_url('/monday-integration/webhook-handler.php');
+    $webhook_url = content_url('/monday-integration/final-webhook-handler.php');
     
     $response = wp_remote_post($webhook_url, [
         'headers' => ['Content-Type' => 'application/json'],
@@ -93,6 +91,29 @@ add_action('admin_menu', function() {
 function monday_monitor_page_html() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'monday_leads_log';
+
+    // Eliminación masiva (Bulk Actions)
+    if (isset($_POST['action']) && $_POST['action'] === 'bulk_delete' && !empty($_POST['log_ids'])) {
+        check_admin_referer('bulk-logs');
+        $log_ids = array_map('intval', $_POST['log_ids']);
+        $placeholders = implode(',', array_fill(0, count($log_ids), '%d'));
+        $deleted = $wpdb->query($wpdb->prepare("DELETE FROM $table_name WHERE id IN ($placeholders)", $log_ids));
+        if ($deleted) {
+            echo '<div class="updated"><p>✅ ' . $deleted . ' registro(s) eliminado(s) correctamente.</p></div>';
+        }
+    }
+
+    // Eliminar registro individual
+    if (isset($_POST['monday_delete_log']) && isset($_POST['log_id'])) {
+        check_admin_referer('monday_delete_log_' . $_POST['log_id']);
+        $log_id = intval($_POST['log_id']);
+        $deleted = $wpdb->delete($table_name, ['id' => $log_id], ['%d']);
+        if ($deleted) {
+            echo '<div class="updated"><p>✅ Registro eliminado correctamente.</p></div>';
+        } else {
+            echo '<div class="error"><p>❌ Error al eliminar el registro.</p></div>';
+        }
+    }
 
     // Test trigger
     if (isset($_POST['monday_test_trigger'])) {
@@ -144,6 +165,17 @@ function monday_monitor_page_html() {
         </div>
         
         <div class="tablenav top">
+            <div class="alignleft actions bulkactions">
+                <form method="post" id="bulk-action-form">
+                    <?php wp_nonce_field('bulk-logs'); ?>
+                    <label for="bulk-action-selector-top" class="screen-reader-text">Seleccionar acción masiva</label>
+                    <select name="action" id="bulk-action-selector-top">
+                        <option value="-1">Acciones masivas</option>
+                        <option value="bulk_delete">Eliminar</option>
+                    </select>
+                    <input type="submit" class="button action" value="Aplicar" onclick="return confirm('¿Estás seguro de eliminar los registros seleccionados?');">
+                </form>
+            </div>
             <div class="alignleft actions">
                 <span class="displaying-num"><?php echo number_format_i18n($total_items); ?> registros</span>
             </div>
@@ -171,23 +203,32 @@ function monday_monitor_page_html() {
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
+                    <td class="manage-column column-cb check-column">
+                        <input type="checkbox" id="cb-select-all-1" onclick="
+                            var checkboxes = document.querySelectorAll('input[name=\'log_ids[]\']');
+                            checkboxes.forEach(function(checkbox) { checkbox.checked = this.checked; }, this);
+                        ">
+                    </td>
                     <th style="width: 150px;">Fecha</th>
                     <th>Email</th>
                     <th style="width: 150px;">Origen</th>
                     <th style="width: 80px;">Status</th>
-                    <th style="width: 100px;">Detalles</th>
+                    <th style="width: 150px;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (empty($logs)): ?>
                 <tr>
-                    <td colspan="5" style="text-align: center; padding: 40px;">
+                    <td colspan="6" style="text-align: center; padding: 40px;">
                         <?php echo $search ? 'No se encontraron resultados.' : 'No hay registros aún. Envía un lead de prueba.'; ?>
                     </td>
                 </tr>
                 <?php else: ?>
                     <?php foreach ($logs as $log): ?>
                     <tr>
+                        <th scope="row" class="check-column">
+                            <input type="checkbox" name="log_ids[]" value="<?php echo $log->id; ?>" form="bulk-action-form">
+                        </th>
                         <td><?php echo esc_html($log->time); ?></td>
                         <td><strong><?php echo esc_html($log->email); ?></strong></td>
                         <td><?php echo esc_html($log->source); ?></td>
@@ -196,11 +237,17 @@ function monday_monitor_page_html() {
                                 <?php echo esc_html($log->status); ?>
                             </span>
                         </td>
-                        <td>
+                        <td style="display: flex; gap: 5px;">
                             <button type="button" class="button button-small" onclick="
                                 var modal = document.getElementById('json-modal-<?php echo $log->id; ?>');
                                 modal.style.display = 'block';
                             ">Ver JSON</button>
+                            
+                            <form method="post" style="display: inline;" onsubmit="return confirm('¿Estás seguro de eliminar este registro?\n\nEmail: <?php echo esc_js($log->email); ?>\nFecha: <?php echo esc_js($log->time); ?>');">
+                                <?php wp_nonce_field('monday_delete_log_' . $log->id); ?>
+                                <input type="hidden" name="log_id" value="<?php echo $log->id; ?>">
+                                <button type="submit" name="monday_delete_log" class="button button-small" style="color: #b32d2e;">🗑️ Eliminar</button>
+                            </form>
                             
                             <!-- Modal -->
                             <div id="json-modal-<?php echo $log->id; ?>" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">

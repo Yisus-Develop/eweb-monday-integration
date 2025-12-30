@@ -61,8 +61,7 @@ class LeadScoring {
         }
         
         // 6. FORMULARIO COMPLETO (3 puntos)
-        $cleanPhone = self::sanitizePhone($data['phone'] ?? '');
-        if (!empty($cleanPhone)) {
+        if (!empty($data['phone'])) {
             $score += 3;
             $breakdown['formulario_completo'] = 3;
         }
@@ -75,7 +74,6 @@ class LeadScoring {
         
         // Clasificación automática
         $classification = self::classify($score);
-        $country = $data['country'] ?? '';
         
         return [
             'total' => $score,
@@ -84,9 +82,7 @@ class LeadScoring {
             'detected_role' => self::detectRole($data),
             'tipo_lead' => self::mapPerfilToTipoLead($data['perfil'] ?? 'general'),
             'canal_origen' => self::detectChannel($data),
-            'idioma' => self::detectLanguage($data),
-            'country_iso' => self::getCountryISO($country),
-            'clean_phone' => self::sanitizePhone($data['phone'] ?? '')
+            'idioma' => self::detectLanguage($data)
         ];
     }
     
@@ -120,13 +116,6 @@ class LeadScoring {
     private static function detectRole($data) {
         $perfil = $data['perfil'] ?? 'general';
 
-        // Si no viene perfil, intentar inferir por otros campos
-        if ($perfil === 'general') {
-            if (isset($data['numero_estudiantes']) || isset($data['tipo_institucion'])) $perfil = 'institucion';
-            elseif (isset($data['ea_institution']) && stripos($data['ea_institution'], 'Universidad') !== false) $perfil = 'institucion';
-            elseif (isset($data['org_name']) || isset($data['modality'])) $perfil = 'empresa';
-        }
-
         $roleMap = [
             'pioneer' => 'Mission Partner',
             'institucion' => 'Rector/Director',
@@ -135,22 +124,22 @@ class LeadScoring {
             'mentor' => 'Maestro/Mentor',
             'pais' => 'Interesado País',
             'zer' => 'Joven',
-            'general' => 'Maestro/Mentor'
+            'general' => 'Maestro/Mentor'  // Cambiado a un valor válido
         ];
 
-        return $roleMap[$perfil] ?? 'Maestro/Mentor';
+        return $roleMap[$perfil] ?? 'Maestro/Mentor';  // Valor por defecto válido
     }
     
     private static function mapPerfilToTipoLead($perfil) {
         $map = [
-            'institucion' => 'Institución',
-            'ciudad' => 'Ciudad',
-            'empresa' => 'Empresa',
-            'pioneer' => 'Pioneer',
-            'mentor' => 'Mentor',
-            'pais' => 'País',
-            'zer' => 'Zer',
-            'general' => 'General'
+            'institucion' => 'Aliado',
+            'ciudad' => 'Aliado',
+            'empresa' => 'Aliado',
+            'pioneer' => 'Aliado',
+            'mentor' => 'Prensa',
+            'pais' => 'Competición',
+            'zer' => 'Competición',
+            'general' => 'Otro'
         ];
         
         return $map[$perfil] ?? 'Otro';
@@ -210,25 +199,5 @@ class LeadScoring {
         
         // Default si no se encuentra
         return $config['languages'][$config['default_language']]['name'];
-    }
-
-    /**
-     * Obtiene el código ISO del país para formato de teléfono
-     */
-    public static function getCountryISO($country) {
-        $configPath = __DIR__ . '/language-config.json';
-        if (!file_exists($configPath)) return 'ES';
-
-        $config = json_decode(file_get_contents($configPath), true);
-        return $config['iso_mapping'][$country] ?? 'ES';
-    }
-
-    /**
-     * Limpia el teléfono de espacios, guiones y puntos
-     */
-    public static function sanitizePhone($phone) {
-        if (empty($phone)) return '';
-        // Eliminar todo lo que no sea dígito o el signo +
-        return preg_replace('/[^\d+]/', '', $phone);
     }
 }
