@@ -1,79 +1,136 @@
 <?php
 // webhook-handler.php
-// Versión FINAL V4.1 - Robusta (Simple String) y Terminología Directa
+// Versión Final Re-Armonizada y Blindada (Fix Nombre y Columnas)
 
-require_once 'config.php';
+// 1. Cargar Configuración
+if (file_exists('../../config/config.php')) {
+    require_once '../../config/config.php';
+} elseif (file_exists('../config.php')) {
+    require_once '../config.php';
+} elseif (file_exists('config.php')) {
+    require_once 'config.php';
+} else {
+    if (!defined('MONDAY_API_TOKEN')) define('MONDAY_API_TOKEN', 'missing');
+}
+
+// 2. Activar Debug si es necesario
+if (defined('WEBHOOK_DEBUG') && WEBHOOK_DEBUG) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+}
+
 require_once 'MondayAPI.php';
 require_once 'LeadScoring.php';
 require_once 'NewColumnIds.php';
 require_once 'StatusConstants.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('HTTP/1.1 405 Method Not Allowed');
-    die('Solo POST permitido');
+// Logging inteligente
+$logFile = __DIR__ . '/webhook_debug.log';
+function logMsg($msg, $isError = false) {
+    global $logFile;
+    if (!$isError && (!defined('WEBHOOK_DEBUG') || !WEBHOOK_DEBUG)) return;
+    if (file_exists($logFile) && filesize($logFile) > 5 * 1024 * 1024) rename($logFile, $logFile . '.old');
+    $prefix = $isError ? '[ERROR] ' : '[INFO] ';
+    @file_put_contents($logFile, date('Y-m-d H:i:s') . " $prefix $msg\n", FILE_APPEND);
 }
 
-$input = file_get_contents('php://input');
-$data = json_decode($input, true) ?: $_POST;
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') die('Solo POST permitido');
 
 try {
-    // 1. Mapeo y Limpieza
+    $input = file_get_contents('php://input');
+    $data = json_decode($input, true) ?: $_POST;
+    
+    logMsg("Recibida petición. Datos: " . substr(print_r($data, true), 0, 500));
+
+    // 1. Mapeo de Identidad y Limpieza de Nombre
+    $rawName = $data['nombre'] ?? $data['your-name'] ?? $data['ea_firstname'] ?? $data['contact_name'] ?? 'Sin Nombre';
+    
+    // Limpieza: Solo quitamos el prefijo de Mars Challenge y los corchetes específicos
+    $cleanName = trim(str_ireplace(['Mars Challenge', '«', '»'], '', $rawName));
+    
+    if (strlen($cleanName) < 2) {
+        $cleanName = !empty($data['email']) ? explode('@', $data['email'])[0] : 'Lead #' . date('His');
+    }
+
     $scoringData = [
-        'name' => $data['nombre'] ?? $data['your-name'] ?? 'Sin Nombre',
-        'email' => $data['email'] ?? $data['your-email'] ?? '',
-        'phone' => $data['telefono'] ?? $data['your-phone'] ?? $data['phone'] ?? '',
-        'country' => $data['pais_cf7'] ?? $data['country'] ?? '',
+        'name'   => $cleanName,
+        'email'  => $data['email'] ?? $data['your-email'] ?? $data['ea_email'] ?? '',
+        'phone'  => strval($data['telefono'] ?? $data['your-phone'] ?? $data['tel-641'] ?? $data['phone'] ?? ''),
+        'country'=> $data['pais_cf7'] ?? $data['pais_otro'] ?? $data['ea_country'] ?? $data['country'] ?? '',
+        'city'   => $data['ciudad_cf7'] ?? $data['ea_city'] ?? $data['city'] ?? '',
         'perfil' => $data['perfil'] ?? 'general',
+        'tipo_institucion' => $data['tipo_institucion'] ?? '',
     ];
 
     if (!filter_var($scoringData['email'], FILTER_VALIDATE_EMAIL)) {
-        throw new Exception('Email inválido');
+        logMsg("Email omitido o inválido: " . ($scoringData['email'] ?: 'vacío'), true);
+        throw new Exception("Email inválido (" . $scoringData['email'] . ")");
     }
 
     $scoreResult = LeadScoring::calculate($scoringData);
-    $rawBackup = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-    // 2. Clasificación
-    $label = StatusConstants::getScoreClassification($scoreResult['total']);
-    $groupId = StatusConstants::getGroupById($label);
-    
     $monday = new MondayAPI(MONDAY_API_TOKEN);
     $boardId = MONDAY_BOARD_ID;
 
-    // 3. Crear Item Básico (Solo lo que es garantizado que funciona en el primer paso)
-    $columnValues = [
-        NewColumnIds::LEAD_EMAIL => ['email' => $scoringData['email'], 'text' => $scoringData['email']],
-        NewColumnIds::NUMERIC_SCORE => (string)$scoreResult['total'],
-        NewColumnIds::CLASSIFICATION_STATUS => ['label' => $label],
-        NewColumnIds::COUNTRY_TEXT => $scoringData['country'],
-        NewColumnIds::DATE_CREATED => ['date' => date('Y-m-d')],
-        NewColumnIds::RAW_DATA_JSON => $rawBackup
+    // Mapa de Entidad
+    $entityLabel = 'En curso';
+    $p = strtolower($scoringData['perfil']);
+    if (strpos($p, 'institucion') !== false || strpos($p, 'pioneer') !== false) $entityLabel = 'Universidad';
+    elseif (strpos($p, 'zer') !== false || strpos($p, 'mentor') !== false) $entityLabel = 'Colegio';
+    elseif (strpos($p, 'empresa') !== false) $entityLabel = 'Corporativo';
+    elseif (strpos($p, 'ciudad') !== false || strpos($p, 'pais') !== false) $entityLabel = 'Gobierno';
+
+    // Preparar Columnas con formatos CORRECTOS
+    $columnUpdates = [
+        NewColumnIds::EMAIL => ['email' => $scoringData['email'], 'text' => $scoringData['email']],
+        NewColumnIds::PHONE => ['phone' => $scoringData['phone'] ?: '0000'],
+        NewColumnIds::PUESTO => strval($scoringData['role'] ?? 'Lead'),
+        NewColumnIds::STATUS => ['label' => StatusConstants::STATUS_LEAD],
+        NewColumnIds::LEAD_SCORE => (int)$scoreResult['total'],
+        NewColumnIds::CLASSIFICATION => ['label' => strval($scoreResult['priority_label'])],
+        NewColumnIds::ROLE_DETECTED => ['label' => strval(StatusConstants::getRoleLabel($scoreResult['detected_role']))],
+        NewColumnIds::COUNTRY => strval($scoringData['country'] ?: 'CO'),
+        NewColumnIds::CITY => strval($scoringData['city'] ?: 'N/A'),
+        NewColumnIds::ENTRY_DATE => ['date' => date('Y-m-d')],
+        NewColumnIds::ENTITY_TYPE => ['label' => $entityLabel],
+        NewColumnIds::IA_ANALYSIS => ['text' => substr(json_encode($scoreResult['breakdown']), 0, 1999)],
+        NewColumnIds::TYPE_OF_LEAD => ['labels' => [strval($scoreResult['tipo_lead'])]],
+        NewColumnIds::SOURCE_CHANNEL => ['labels' => [strval($scoreResult['canal_origen'])]],
+        NewColumnIds::LANGUAGE => ['labels' => [strval($scoreResult['idioma'])]],
+        NewColumnIds::FORM_SUMMARY => ['text' => json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)]
     ];
 
-    $itemResponse = $monday->createItem($boardId, $scoringData['name'], $columnValues, $groupId);
-    $itemId = $itemResponse['create_item']['id'] ?? null;
-
-    if ($itemId) {
-        // 4. Actualizar Columnas Delicadas usando changeSimpleColumnValue (Mucho más robusto)
-        
-        // TELÉFONO: Como string simple (+52...) Monday lo detecta mejor
-        if (!empty($scoreResult['clean_phone'])) {
-            $monday->changeSimpleColumnValue($boardId, $itemId, NewColumnIds::LEAD_PHONE, $scoreResult['clean_phone']);
-        }
-
-        // TERMINOLOGÍA DIRECTA: Zer, Pioneer, etc.
-        $monday->changeSimpleColumnValue($boardId, $itemId, NewColumnIds::TYPE_OF_LEAD, $scoreResult['tipo_lead'], true);
-        
-        // OTROS DROPDOWNS
-        $monday->changeSimpleColumnValue($boardId, $itemId, NewColumnIds::SOURCE_CHANNEL, 'Website', true);
-        $monday->changeSimpleColumnValue($boardId, $itemId, NewColumnIds::LANGUAGE, $scoreResult['idioma'], true);
+    // Manejo de Registro
+    $existing = $monday->getItemsByColumnValue($boardId, NewColumnIds::EMAIL, $scoringData['email']);
+    if (!empty($existing)) {
+        $itemId = $existing[0]['id'];
+        logMsg("Actualizando lead existente: $itemId");
+        $action = 'updated';
+    } else {
+        logMsg("Creando nuevo lead: " . $scoringData['name']);
+        $resp = $monday->createItem($boardId, $scoringData['name'], []);
+        $itemId = $resp['create_item']['id'] ?? null;
+        $action = 'created';
     }
 
-    header('Content-Type: application/json');
-    echo json_encode(['status' => 'success', 'id' => $itemId]);
+    if ($itemId) {
+        logMsg("Enviando actualización masiva para $itemId...");
+        try {
+            // Un solo hit a la API (RÁPIDO) elimina el error 500 por timeout
+            $monday->changeMultipleColumnValues($boardId, $itemId, json_encode($columnUpdates));
+            logMsg("OK: Actualización masiva completada.");
+        } catch (Exception $e) {
+            logMsg("Fallo en masiva: " . $e->getMessage() . ". Reintentando individual...", true);
+            // Fallback individual si falla la masiva (seguridad extra)
+            foreach ($columnUpdates as $colId => $val) {
+                try { $monday->changeColumnValue($boardId, $itemId, $colId, $val); } catch (Exception $e2) {}
+            }
+        }
+    }
 
-} catch (Exception $e) {
-    header('HTTP/1.1 500 Internal Server Error');
+    echo json_encode(['status' => 'success', 'action' => $action, 'monday_id' => $itemId]);
+
+} catch (Throwable $e) {
+    logMsg("FALLO: " . $e->getMessage(), true);
+    header('HTTP/1.1 500');
     echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
 }
-?>

@@ -1,0 +1,30 @@
+2026-01-05 13:04:02 - Datos: Array
+(
+)
+
+2026-01-05 13:04:33 - Datos: Array
+(
+    [nombre] => Test User Antigravity
+    [contact_name] => Test User Antigravity
+    [email] => yisus.dev.test@gmail.com
+    [your-name] => Test User Antigravity
+    [your-email] => yisus.dev.test@gmail.com
+    [pais_cf7] => Colombia
+    [tipo_institucion] => Universidad
+    [perfil] => institucion
+    [telefono] => +573001234567
+)
+
+2026-01-05 13:08:05 - Datos: Array
+(
+    [nombre] => Test User Antigravity
+    [contact_name] => Test User Antigravity
+    [email] => yisus.dev.test@gmail.com
+    [your-name] => Test User Antigravity
+    [your-email] => yisus.dev.test@gmail.com
+    [pais_cf7] => Colombia
+    [tipo_institucion] => Universidad
+    [perfil] => institucion
+    [telefono] => +573001234567
+)
+

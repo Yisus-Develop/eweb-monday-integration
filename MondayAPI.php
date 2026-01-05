@@ -37,7 +37,9 @@ class MondayAPI {
         $json = json_decode($response, true);
 
         if (isset($json['errors'])) {
-            throw new Exception('Error Monday API: ' . json_encode($json['errors']));
+            $errorDetail = json_encode($json['errors']);
+            $payloadDebug = "Payload: " . json_encode($data);
+            throw new Exception("Error Monday API: $errorDetail | $payloadDebug");
         }
 
         return $json['data'];
@@ -309,6 +311,20 @@ class MondayAPI {
             'boardId' => (int)$boardId,
             'columnId' => $columnId,
             'title' => $title
+        ];
+
+        return $this->query($query, $variables);
+    }
+
+    public function deleteItem($itemId) {
+        $query = 'mutation ($itemId: ID!) {
+            delete_item (item_id: $itemId) {
+                id
+            }
+        }';
+
+        $variables = [
+            'itemId' => (int)$itemId
         ];
 
         return $this->query($query, $variables);

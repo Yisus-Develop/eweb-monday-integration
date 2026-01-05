@@ -51,7 +51,7 @@ class MondayAPI {
         }';
 
         $variables = [
-            'boardId' => (int)$boardId,
+            'boardId' => $boardId,
             'itemName' => $itemName,
             'columnValues' => json_encode($columnValues),
             'groupId' => $groupId
@@ -176,8 +176,8 @@ class MondayAPI {
         }';
 
         $variables = [
-            'boardId' => (int)$boardId,
-            'itemId' => (int)$itemId,
+            'boardId' => $boardId,
+            'itemId' => $itemId,
             'columnValues' => json_encode($columnValues)
         ];
 
@@ -243,8 +243,8 @@ class MondayAPI {
         }';
 
         $variables = [
-            'boardId' => (int)$boardId,
-            'itemId' => (int)$itemId,
+            'boardId' => $boardId,
+            'itemId' => $itemId,
             'columnId' => $columnId,
             'value' => json_encode($value)
         ];
@@ -309,6 +309,20 @@ class MondayAPI {
             'boardId' => (int)$boardId,
             'columnId' => $columnId,
             'title' => $title
+        ];
+
+        return $this->query($query, $variables);
+    }
+
+    public function deleteItem($itemId) {
+        $query = 'mutation ($itemId: ID!) {
+            delete_item (item_id: $itemId) {
+                id
+            }
+        }';
+
+        $variables = [
+            'itemId' => (int)$itemId
         ];
 
         return $this->query($query, $variables);

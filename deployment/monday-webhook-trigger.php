@@ -44,11 +44,13 @@ function monday_trigger_webhook_on_sent($contact_form) {
     monday_send_to_handler($data, "Form: " . $contact_form->title());
 }
 
-// 3. Logic to Send Webhook
+    // 3. Logic to Send Webhook
 function monday_send_to_handler($data, $source = "Manual Test") {
     global $wpdb;
     $table_name = $wpdb->prefix . 'monday_leads_log';
-    $webhook_url = content_url('/monday-integration/final-webhook-handler.php');
+    
+    // URL del handler robusto
+    $webhook_url = content_url('/monday-integration/webhook-handler.php');
     
     $response = wp_remote_post($webhook_url, [
         'headers' => ['Content-Type' => 'application/json'],
@@ -57,28 +59,21 @@ function monday_send_to_handler($data, $source = "Manual Test") {
         'blocking' => true,
     ]);
 
-    // Verificar que la tabla existe (por si no se activó el plugin correctamente)
+    // Verificar que la tabla existe
     $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
-    
     if (!$table_exists) {
-        // Crear tabla si no existe
         monday_integration_create_db();
     }
 
-    // Registro en la Base de Datos SQL
-    $insert_result = $wpdb->insert($table_name, [
+    // Registro en la Base de Datos SQL (¡ESTO ES LO QUE FALTABA!)
+    $wpdb->insert($table_name, [
         'time'          => current_time('mysql'),
-        'email'         => $data['email'] ?? $data['your-email'] ?? 'N/A',
+        'email'         => $data['email'] ?? $data['your-email'] ?? $data['ea_email'] ?? 'N/A',
         'source'        => $source,
         'status'        => is_wp_error($response) ? 'Error' : wp_remote_retrieve_response_code($response),
         'response_body' => is_wp_error($response) ? $response->get_error_message() : substr(wp_remote_retrieve_body($response), 0, 500),
         'full_payload'  => json_encode($data)
     ]);
-    
-    // Log de debug si falla el insert
-    if ($insert_result === false) {
-        error_log('Monday Integration: Failed to insert log. Error: ' . $wpdb->last_error);
-    }
     
     return $response;
 }
@@ -91,6 +86,29 @@ add_action('admin_menu', function() {
 function monday_monitor_page_html() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'monday_leads_log';
+
+    // Re-enviar Registro
+    if (isset($_POST['monday_resend_log']) && isset($_POST['log_id'])) {
+        check_admin_referer('monday_resend_log_' . $_POST['log_id']);
+        $log_id = intval($_POST['log_id']);
+        $log = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $log_id));
+        
+        if ($log) {
+            $payload = json_decode($log->full_payload, true);
+            $response = monday_send_to_handler($payload, "Re-envío Manual (ID: $log_id)");
+            
+            $code = is_wp_error($response) ? 'Error' : wp_remote_retrieve_response_code($response);
+            $body = is_wp_error($response) ? $response->get_error_message() : substr(wp_remote_retrieve_body($response), 0, 500);
+            
+            // Actualizar el log existente con el nuevo resultado
+            $wpdb->update($table_name, 
+                ['status' => $code, 'response_body' => $body, 'time' => current_time('mysql')],
+                ['id' => $log_id]
+            );
+            
+            echo '<div class="updated"><p>🚀 Re-envío completado. Status: <strong>' . $code . '</strong></p></div>';
+        }
+    }
 
     // Eliminación masiva (Bulk Actions)
     if (isset($_POST['action']) && $_POST['action'] === 'bulk_delete' && !empty($_POST['log_ids'])) {
@@ -238,6 +256,12 @@ function monday_monitor_page_html() {
                             </span>
                         </td>
                         <td style="display: flex; gap: 5px;">
+                            <form method="post" style="display: inline;">
+                                <?php wp_nonce_field('monday_resend_log_' . $log->id); ?>
+                                <input type="hidden" name="log_id" value="<?php echo $log->id; ?>">
+                                <button type="submit" name="monday_resend_log" class="button button-small button-primary" title="Re-procesar este lead">🔄 Re-enviar</button>
+                            </form>
+
                             <button type="button" class="button button-small" onclick="
                                 var modal = document.getElementById('json-modal-<?php echo $log->id; ?>');
                                 modal.style.display = 'block';
