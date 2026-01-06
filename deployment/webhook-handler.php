@@ -24,6 +24,17 @@ require_once 'LeadScoring.php';
 require_once 'NewColumnIds.php';
 require_once 'StatusConstants.php';
 
+// --- SEGURIDAD: Validación de Token Secreto ---
+$received_secret = $_SERVER['HTTP_X_MC_SECRET'] ?? '';
+$expected_secret = defined('MONDAY_INTEGRATION_SECRET') ? MONDAY_INTEGRATION_SECRET : '';
+
+if (empty($expected_secret) || $received_secret !== $expected_secret) {
+    header('HTTP/1.1 401 Unauthorized');
+    echo json_encode(['error' => 'Acceso no autorizado. Token inválido.']);
+    exit;
+}
+// ----------------------------------------------
+
 // Logging inteligente
 $logFile = __DIR__ . '/webhook_debug.log';
 function logMsg($msg, $isError = false) {
