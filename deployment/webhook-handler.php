@@ -102,13 +102,13 @@ try {
     $monday = new MondayAPI(MONDAY_API_TOKEN);
     $boardId = MONDAY_BOARD_ID;
 
-    // Mapa de Entidad (Status Column)
-    $entityLabel = 'Otro';
+    // Mapa de Entidad (Status Column) - Solo etiquetas válidas en Monday
+    $entityLabel = 'Corporativo'; // Default
     $p = strtolower($scoringData['perfil']);
     if (strpos($p, 'institucion') !== false || strpos($p, 'pioneer') !== false) $entityLabel = 'Universidad';
-    elseif (strpos($p, 'zer') !== false || strpos($p, 'mentor') !== false) $entityLabel = 'Escuela';
-    elseif (strpos($p, 'empresa') !== false) $entityLabel = 'Empresa';
-    elseif (strpos($p, 'ciudad') !== false || strpos($p, 'pais') !== false) $entityLabel = 'Ciudad';
+    elseif (strpos($p, 'zer') !== false || strpos($p, 'mentor') !== false || strpos($p, 'colegio') !== false) $entityLabel = 'Colegio';
+    elseif (strpos($p, 'empresa') !== false || strpos($p, 'corporativo') !== false) $entityLabel = 'Corporativo';
+    elseif (strpos($p, 'gobierno') !== false || strpos($p, 'ciudad') !== false || strpos($p, 'pais') !== false) $entityLabel = 'Gobierno';
 
     $puestoFinal = strval($scoreResult['detected_role'] ?? 'Lead');
 
