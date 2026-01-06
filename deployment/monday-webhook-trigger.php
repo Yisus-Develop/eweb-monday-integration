@@ -52,11 +52,6 @@ function monday_send_to_handler($data, $source = "Manual Test") {
     // URL del handler robusto
     $webhook_url = content_url('/monday-integration/webhook-handler.php');
     
-    // Auth: Usamos un Token Secreto definido en config.php para independencia de claves del servidor
-    // Lo enviamos por Query Param para máxima compatibilidad con servidores que bloquean cabeceras
-    $secret = defined('MONDAY_INTEGRATION_SECRET') ? MONDAY_INTEGRATION_SECRET : '';
-    $webhook_url = add_query_arg('mc_secret', $secret, $webhook_url);
-    
     $response = wp_remote_post($webhook_url, [
         'headers' => [
             'Content-Type' => 'application/json'
