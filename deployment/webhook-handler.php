@@ -50,12 +50,14 @@ try {
 
     // 1. Mapeo de Identidad y Limpieza de Nombre
     $rawName = $data['nombre'] ?? 
+               $data['nombre_empresa'] ?? 
                $data['your-name'] ?? 
                $data['contact_name'] ?? 
                $data['ea_firstname'] ?? 
                $data['first-name'] ?? 
                $data['full-name'] ?? 
-               $data['first'] ?? // Nuevo: Detectado en algunos logs
+               $data['first'] ?? 
+               $data['name'] ?? 
                '';
 
     // Si tenemos campos separados de nombre y apellido
@@ -83,8 +85,12 @@ try {
         'phone'  => strval($data['telefono'] ?? $data['your-phone'] ?? $data['tel-641'] ?? $data['phone'] ?? ''),
         'country'=> $data['pais_cf7'] ?? $data['pais_otro'] ?? $data['ea_country'] ?? $data['country'] ?? '',
         'city'   => $data['ciudad_cf7'] ?? $data['ea_city'] ?? $data['city'] ?? '',
-        'perfil' => $data['perfil'] ?? 'general',
+        'perfil' => $data['perfil'] ?? $data['profile'] ?? 'general',
+        'profile'=> $data['profile'] ?? $data['perfil'] ?? 'general',
         'tipo_institucion' => $data['tipo_institucion'] ?? '',
+        'numero_estudiantes' => $data['numero_estudiantes'] ?? 0,
+        'poblacion' => $data['poblacion'] ?? $data['population'] ?? 0,
+        'population' => $data['population'] ?? $data['poblacion'] ?? 0,
     ];
 
     if (!filter_var($scoringData['email'], FILTER_VALIDATE_EMAIL)) {
@@ -104,11 +110,23 @@ try {
     elseif (strpos($p, 'empresa') !== false) $entityLabel = 'Empresa';
     elseif (strpos($p, 'ciudad') !== false || strpos($p, 'pais') !== false) $entityLabel = 'Ciudad';
 
+    // Captura de Mensaje/Asunto/Especialidad para poner en PUESTO si está vacío el cargo
+    $roleDetected = strval($scoreResult['detected_role'] ?? 'Lead');
+    $additionalInfo = "";
+    if (!empty($data['asunto'])) $additionalInfo .= "Asunto: " . $data['asunto'] . ". ";
+    if (!empty($data['interes'])) $additionalInfo .= "Interés: " . $data['interes'] . ". ";
+    if (!empty($data['especialidad'])) $additionalInfo .= "Esp: " . $data['especialidad'] . ". ";
+    if (!empty($data['mensaje'])) $additionalInfo .= "Msg: " . substr($data['mensaje'], 0, 100) . "...";
+
+    $puestoFinal = $roleDetected;
+    if (!empty($additionalInfo)) $puestoFinal .= " (" . trim($additionalInfo) . ")";
+
+
     // Preparar Columnas con formatos CORRECTOS
     $columnUpdates = [
         NewColumnIds::EMAIL => ['email' => $scoringData['email'], 'text' => $scoringData['email']],
         NewColumnIds::PHONE => ['phone' => $scoringData['phone'] ?: '0000'],
-        NewColumnIds::PUESTO => strval($scoringData['role'] ?? 'Lead'),
+        NewColumnIds::PUESTO => $puestoFinal,
         NewColumnIds::STATUS => ['label' => StatusConstants::STATUS_LEAD],
         NewColumnIds::LEAD_SCORE => (int)$scoreResult['total'],
         NewColumnIds::CLASSIFICATION => ['label' => strval($scoreResult['priority_label'])],
