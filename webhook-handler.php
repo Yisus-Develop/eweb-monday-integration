@@ -136,7 +136,7 @@ try {
     // Determinar el Status (Tipo) - Para evitar disparar automatizaciones de mail en Zers
     $statusFinal = StatusConstants::STATUS_LEAD;
     if ($scoreResult['detected_role'] === 'Joven') {
-        $statusFinal = 'Partner'; // O cualquier otro que NO sea 'Lead'
+        $statusFinal = 'Lead Zers'; // Nuevo tipo para separar a los Zers
     }
 
     // Preparar Columnas con formatos CORRECTOS
