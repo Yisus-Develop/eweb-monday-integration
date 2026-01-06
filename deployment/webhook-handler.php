@@ -118,6 +118,20 @@ try {
     elseif (strpos($p, 'gobierno') !== false || strpos($p, 'ciudad') !== false || strpos($p, 'pais') !== false) $entityLabel = 'Gobierno';
 
     $puestoFinal = strval($scoreResult['detected_role'] ?? 'Lead');
+    
+    // Enriquecer PUESTO con organización si está disponible
+    if (!empty($scoringData['organizacion'])) {
+        $puestoFinal .= ' - ' . $scoringData['organizacion'];
+    }
+    
+    // Preparar campo de Interés/Especialidad
+    $interesEspecialidad = '';
+    if (!empty($scoringData['interes'])) {
+        $interesEspecialidad = $scoringData['interes'];
+    }
+    if (!empty($scoringData['especialidad'])) {
+        $interesEspecialidad .= ($interesEspecialidad ? ' | ' : '') . $scoringData['especialidad'];
+    }
 
     // Preparar Columnas con formatos CORRECTOS
     $columnUpdates = [
@@ -132,6 +146,7 @@ try {
         NewColumnIds::CITY => strval($scoringData['city'] ?: 'N/A'),
         NewColumnIds::ENTRY_DATE => ['date' => date('Y-m-d')],
         NewColumnIds::ENTITY_TYPE => ['label' => $entityLabel],
+        NewColumnIds::PARTNER_REF => $interesEspecialidad, // Interés/Especialidad
         NewColumnIds::IA_ANALYSIS => ['text' => substr(json_encode($scoreResult['breakdown']), 0, 1999)],
         NewColumnIds::TYPE_OF_LEAD => ['labels' => [strval($scoreResult['tipo_lead'])]],
         NewColumnIds::SOURCE_CHANNEL => ['labels' => [strval($scoreResult['canal_origen'])]],
