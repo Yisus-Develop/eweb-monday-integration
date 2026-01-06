@@ -143,17 +143,29 @@ try {
         NewColumnIds::FORM_SUMMARY => ['text' => json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)]
     ];
 
-    // Manejo de Registro
+    // Manejo de Registro (Deduplicación con Historial en Sub-elementos)
     $existing = $monday->getItemsByColumnValue($boardId, NewColumnIds::EMAIL, $scoringData['email']);
+    $action = 'created';
+    
     if (!empty($existing)) {
         $itemId = $existing[0]['id'];
-        logMsg("Actualizando lead existente: $itemId");
+        logMsg("Lead existente detectado ($itemId). Creando sub-elemento de historial...");
+        
+        $formTitle = $data['your-subject'] ?? $data['asunto'] ?? 'Formulario';
+        $subitemName = "Entrada: " . substr($formTitle, 0, 50) . " (" . date('d/m/Y H:i') . ")";
+        
+        try {
+            $monday->createSubitem($itemId, $subitemName);
+        } catch (Exception $e) {
+            logMsg("Error creando sub-elemento (ignorado): " . $e->getMessage(), true);
+        }
+        
+        logMsg("Actualizando lead principal: $itemId");
         $action = 'updated';
     } else {
         logMsg("Creando nuevo lead: " . $scoringData['name']);
         $resp = $monday->createItem($boardId, $scoringData['name'], []);
         $itemId = $resp['create_item']['id'] ?? null;
-        $action = 'created';
     }
 
     if ($itemId) {

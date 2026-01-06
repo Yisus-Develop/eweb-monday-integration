@@ -327,4 +327,20 @@ class MondayAPI {
 
         return $this->query($query, $variables);
     }
+
+    public function createSubitem($parentItemId, $itemName, $columnValues = []) {
+        $query = 'mutation ($parentItemId: ID!, $itemName: String!, $columnValues: JSON!) {
+            create_subitem (parent_item_id: $parentItemId, item_name: $itemName, column_values: $columnValues) {
+                id
+            }
+        }';
+
+        $variables = [
+            'parentItemId' => (int)$parentItemId,
+            'itemName' => $itemName,
+            'columnValues' => json_encode($columnValues)
+        ];
+
+        return $this->query($query, $variables);
+    }
 }
