@@ -133,12 +133,18 @@ try {
         $interesEspecialidad .= ($interesEspecialidad ? ' | ' : '') . $scoringData['especialidad'];
     }
 
+    // Determinar el Status (Tipo) - Para evitar disparar automatizaciones de mail en Zers
+    $statusFinal = StatusConstants::STATUS_LEAD;
+    if ($scoreResult['detected_role'] === 'Joven') {
+        $statusFinal = 'Partner'; // O cualquier otro que NO sea 'Lead'
+    }
+
     // Preparar Columnas con formatos CORRECTOS
     $columnUpdates = [
         NewColumnIds::EMAIL => ['email' => $scoringData['email'], 'text' => $scoringData['email']],
         NewColumnIds::PHONE => ['phone' => $scoringData['phone'] ?: '0000', 'countryShortName' => ($scoringData['country'] ?: 'ES')],
         NewColumnIds::PUESTO => $puestoFinal,
-        NewColumnIds::STATUS => ['label' => StatusConstants::STATUS_LEAD],
+        NewColumnIds::STATUS => ['label' => $statusFinal],
         NewColumnIds::LEAD_SCORE => (int)$scoreResult['total'],
         NewColumnIds::CLASSIFICATION => ['label' => strval($scoreResult['priority_label'])],
         NewColumnIds::ROLE_DETECTED => ['label' => strval(StatusConstants::getRoleLabel($scoreResult['detected_role']))],
