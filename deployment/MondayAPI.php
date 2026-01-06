@@ -343,4 +343,19 @@ class MondayAPI {
 
         return $this->query($query, $variables);
     }
+
+    public function createUpdate($itemId, $body) {
+        $query = 'mutation ($itemId: ID!, $body: String!) {
+            create_update (item_id: $itemId, body: $body) {
+                id
+            }
+        }';
+
+        $variables = [
+            'itemId' => (int)$itemId,
+            'body' => $body
+        ];
+
+        return $this->query($query, $variables);
+    }
 }

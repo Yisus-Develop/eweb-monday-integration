@@ -149,15 +149,21 @@ try {
     
     if (!empty($existing)) {
         $itemId = $existing[0]['id'];
-        logMsg("Lead existente detectado ($itemId). Creando sub-elemento de historial...");
+        logMsg("Lead existente detectado ($itemId). Creando nota de historial (Update)...");
         
-        $formTitle = $data['your-subject'] ?? $data['asunto'] ?? 'Formulario';
-        $subitemName = "Entrada: " . substr($formTitle, 0, 50) . " (" . date('d/m/Y H:i') . ")";
+        $formTitle = $data['your-subject'] ?? $data['asunto'] ?? 'Nuevo Formulario Enviado';
+        $updateBody = "<b>📋 Historial de Formulario: $formTitle</b><br><br>";
+        $updateBody .= "Se ha recibido una nueva entrada para este contacto:<br><ul>";
+        foreach ($data as $key => $val) {
+            if (is_array($val)) $val = implode(', ', $val);
+            $updateBody .= "<li><b>$key:</b> " . htmlspecialchars($val) . "</li>";
+        }
+        $updateBody .= "</ul><br><i>Enviado el " . date('d/m/Y H:i:s') . " desde " . $_SERVER['HTTP_REFERER'] . "</i>";
         
         try {
-            $monday->createSubitem($itemId, $subitemName);
+            $monday->createUpdate($itemId, $updateBody);
         } catch (Exception $e) {
-            logMsg("Error creando sub-elemento (ignorado): " . $e->getMessage(), true);
+            logMsg("Error creando actualización (ignorado): " . $e->getMessage(), true);
         }
         
         logMsg("Actualizando lead principal: $itemId");
