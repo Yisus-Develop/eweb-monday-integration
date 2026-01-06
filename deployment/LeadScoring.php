@@ -102,8 +102,9 @@ class LeadScoring {
     }
     
     private static function scoreByTipoInstitucion($tipo) {
-        if (stripos($tipo, 'Universidad') !== false) return 5;
-        if (stripos($tipo, 'Escuela') !== false) return 3;
+        $tipoStr = is_array($tipo) ? implode(' ', $tipo) : strval($tipo);
+        if (stripos($tipoStr, 'Universidad') !== false || stripos($tipoStr, 'University') !== false) return 5;
+        if (stripos($tipoStr, 'Escuela') !== false || stripos($tipoStr, 'School') !== false) return 3;
         return 0;
     }
     
@@ -132,13 +133,13 @@ class LeadScoring {
     
     private static function mapPerfilToTipoLead($perfil) {
         $map = [
-            'institucion' => 'Aliado',
-            'ciudad' => 'Aliado',
-            'empresa' => 'Aliado',
-            'pioneer' => 'Aliado',
-            'mentor' => 'Prensa',
-            'pais' => 'Competición',
-            'zer' => 'Competición',
+            'institucion' => 'Universidad',
+            'ciudad' => 'Ciudad',
+            'empresa' => 'Empresa',
+            'pioneer' => 'Universidad',
+            'mentor' => 'Escuela',
+            'pais' => 'Otro',
+            'zer' => 'Otro',
             'general' => 'Otro'
         ];
         
