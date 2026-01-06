@@ -136,7 +136,7 @@ class LeadScoring {
     }
     
     private static function detectRole($data) {
-        $perfil = $data['perfil'] ?? 'general';
+        $perfil = $data['perfil'] ?? $data['profile'] ?? $data['ea_role'] ?? 'general';
 
         $roleMap = [
             'pioneer' => 'Mission Partner',
