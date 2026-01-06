@@ -43,14 +43,33 @@ try {
     logMsg("Recibida petición. Datos: " . substr(print_r($data, true), 0, 500));
 
     // 1. Mapeo de Identidad y Limpieza de Nombre
-    $rawName = $data['nombre'] ?? $data['your-name'] ?? $data['ea_firstname'] ?? $data['contact_name'] ?? 'Sin Nombre';
+    $rawName = $data['nombre'] ?? 
+               $data['your-name'] ?? 
+               $data['contact_name'] ?? 
+               $data['ea_firstname'] ?? 
+               $data['first-name'] ?? 
+               $data['full-name'] ?? 
+               $data['first'] ?? // Nuevo: Detectado en algunos logs
+               '';
+
+    // Si tenemos campos separados de nombre y apellido
+    if (empty($rawName) && isset($data['first']) && isset($data['last'])) {
+        $rawName = $data['first'] . ' ' . $data['last'];
+    } elseif (empty($rawName) && isset($data['ea_firstname']) && isset($data['ea_lastname'])) {
+        $rawName = $data['ea_firstname'] . ' ' . $data['ea_lastname'];
+    }
+
+    if (empty($rawName)) $rawName = 'Sin Nombre';
     
     // Limpieza: Solo quitamos el prefijo de Mars Challenge y los corchetes específicos
     $cleanName = trim(str_ireplace(['Mars Challenge', '«', '»'], '', $rawName));
     
-    if (strlen($cleanName) < 2) {
+    // Si el nombre es "Sin Nombre" o muy corto, intentamos usar el email
+    if ($cleanName === 'Sin Nombre' || strlen($cleanName) < 2) {
         $cleanName = !empty($data['email']) ? explode('@', $data['email'])[0] : 'Lead #' . date('His');
     }
+
+    logMsg("Identidad detectada: $cleanName (" . ($data['email'] ?? 'sin email') . ")");
 
     $scoringData = [
         'name'   => $cleanName,
