@@ -25,11 +25,24 @@ require_once 'NewColumnIds.php';
 require_once 'StatusConstants.php';
 
 // --- SEGURIDAD: Validación de Token Secreto ---
-$received_secret = $_SERVER['HTTP_X_MC_SECRET'] ?? '';
+function getMCSecret() {
+    if (isset($_SERVER['HTTP_X_MC_SECRET'])) return $_SERVER['HTTP_X_MC_SECRET'];
+    if (isset($_SERVER['X_MC_SECRET'])) return $_SERVER['X_MC_SECRET'];
+    if (function_exists('apache_request_headers')) {
+        $headers = apache_request_headers();
+        if (isset($headers['X-MC-Secret'])) return $headers['X-MC-Secret'];
+        if (isset($headers['x-mc-secret'])) return $headers['x-mc-secret'];
+    }
+    return '';
+}
+
+$received_secret = getMCSecret();
 $expected_secret = defined('MONDAY_INTEGRATION_SECRET') ? MONDAY_INTEGRATION_SECRET : '';
 
 if (empty($expected_secret) || $received_secret !== $expected_secret) {
     header('HTTP/1.1 401 Unauthorized');
+    $logMsg = "AUTH FAILED: Received: " . (empty($received_secret) ? 'EMPTY' : 'TOKEN_MISMATCH');
+    file_put_contents(__DIR__ . '/webhook_debug.log', "[" . date('Y-m-d H:i:s') . "] [ERROR] $logMsg\n", FILE_APPEND);
     echo json_encode(['error' => 'Acceso no autorizado. Token inválido.']);
     exit;
 }
