@@ -29,8 +29,7 @@ class LeadScoring {
         $breakdown = [];
         
         // 1. PERFIL (Máximo: 10 puntos) - CRÍTICO
-        $perfil = $data['perfil'] ?? $data['profile'] ?? 'general';
-        $perfilScore = self::scoreByPerfil($perfil);
+        $perfilScore = self::scoreByPerfil($data['perfil'] ?? 'general');
         $score += $perfilScore;
         $breakdown['perfil'] = $perfilScore;
         
@@ -50,15 +49,13 @@ class LeadScoring {
         }
         
         // 4. TAMAÑO DE INSTITUCIÓN (Máximo: 3 puntos)
-        $numEstudiantes = $data['numero_estudiantes'] ?? 0;
-        if ($numEstudiantes > 1000) {
+        if (isset($data['numero_estudiantes']) && $data['numero_estudiantes'] > 1000) {
             $score += 3;
             $breakdown['institucion_grande'] = 3;
         }
         
         // 5. POBLACIÓN (para ciudades) (Máximo: 3 puntos)
-        $poblacion = $data['poblacion'] ?? $data['population'] ?? 0;
-        if ($poblacion > 100000) {
+        if (isset($data['poblacion']) && $data['poblacion'] > 100000) {
             $score += 3;
             $breakdown['ciudad_grande'] = 3;
         }
@@ -73,24 +70,6 @@ class LeadScoring {
         if (isset($data['modality']) && $data['modality'] === 'Donación') {
             $score += 3;
             $breakdown['donacion'] = 3;
-        }
-        
-        // 8. ORGANIZACIÓN IDENTIFICADA (2 puntos) - Contexto comercial
-        if (!empty($data['organizacion'])) {
-            $score += 2;
-            $breakdown['organizacion_identificada'] = 2;
-        }
-        
-        // 9. INTERÉS ESPECÍFICO (2 puntos) - Lead cualificado
-        if (!empty($data['interes']) || !empty($data['especialidad'])) {
-            $score += 2;
-            $breakdown['interes_especifico'] = 2;
-        }
-        
-        // 10. MENSAJE DETALLADO (1 punto) - Engagement
-        if (!empty($data['mensaje']) && strlen($data['mensaje']) > 50) {
-            $score += 1;
-            $breakdown['mensaje_detallado'] = 1;
         }
         
         // Clasificación automática
@@ -123,9 +102,8 @@ class LeadScoring {
     }
     
     private static function scoreByTipoInstitucion($tipo) {
-        $tipoStr = is_array($tipo) ? implode(' ', $tipo) : strval($tipo);
-        if (stripos($tipoStr, 'Universidad') !== false || stripos($tipoStr, 'University') !== false) return 5;
-        if (stripos($tipoStr, 'Escuela') !== false || stripos($tipoStr, 'School') !== false) return 3;
+        if (stripos($tipo, 'Universidad') !== false) return 5;
+        if (stripos($tipo, 'Escuela') !== false) return 3;
         return 0;
     }
     
@@ -154,13 +132,13 @@ class LeadScoring {
     
     private static function mapPerfilToTipoLead($perfil) {
         $map = [
-            'institucion' => 'Universidad',
-            'ciudad' => 'Ciudad',
-            'empresa' => 'Empresa',
-            'pioneer' => 'Universidad',
-            'mentor' => 'Escuela',
-            'pais' => 'Otro',
-            'zer' => 'Otro',
+            'institucion' => 'Aliado',
+            'ciudad' => 'Aliado',
+            'empresa' => 'Aliado',
+            'pioneer' => 'Aliado',
+            'mentor' => 'Prensa',
+            'pais' => 'Competición',
+            'zer' => 'Competición',
             'general' => 'Otro'
         ];
         

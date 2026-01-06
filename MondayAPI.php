@@ -37,9 +37,7 @@ class MondayAPI {
         $json = json_decode($response, true);
 
         if (isset($json['errors'])) {
-            $errorDetail = json_encode($json['errors']);
-            $payloadDebug = "Payload: " . json_encode($data);
-            throw new Exception("Error Monday API: $errorDetail | $payloadDebug");
+            throw new Exception('Error Monday API: ' . json_encode($json['errors']));
         }
 
         return $json['data'];
@@ -53,7 +51,7 @@ class MondayAPI {
         }';
 
         $variables = [
-            'boardId' => (int)$boardId,
+            'boardId' => $boardId,
             'itemName' => $itemName,
             'columnValues' => json_encode($columnValues),
             'groupId' => $groupId
@@ -178,8 +176,8 @@ class MondayAPI {
         }';
 
         $variables = [
-            'boardId' => (int)$boardId,
-            'itemId' => (int)$itemId,
+            'boardId' => $boardId,
+            'itemId' => $itemId,
             'columnValues' => json_encode($columnValues)
         ];
 
@@ -245,8 +243,8 @@ class MondayAPI {
         }';
 
         $variables = [
-            'boardId' => (int)$boardId,
-            'itemId' => (int)$itemId,
+            'boardId' => $boardId,
+            'itemId' => $itemId,
             'columnId' => $columnId,
             'value' => json_encode($value)
         ];
@@ -325,6 +323,37 @@ class MondayAPI {
 
         $variables = [
             'itemId' => (int)$itemId
+        ];
+
+        return $this->query($query, $variables);
+    }
+
+    public function createSubitem($parentItemId, $itemName, $columnValues = []) {
+        $query = 'mutation ($parentItemId: ID!, $itemName: String!, $columnValues: JSON!) {
+            create_subitem (parent_item_id: $parentItemId, item_name: $itemName, column_values: $columnValues) {
+                id
+            }
+        }';
+
+        $variables = [
+            'parentItemId' => (int)$parentItemId,
+            'itemName' => $itemName,
+            'columnValues' => json_encode($columnValues)
+        ];
+
+        return $this->query($query, $variables);
+    }
+
+    public function createUpdate($itemId, $body) {
+        $query = 'mutation ($itemId: ID!, $body: String!) {
+            create_update (item_id: $itemId, body: $body) {
+                id
+            }
+        }';
+
+        $variables = [
+            'itemId' => (int)$itemId,
+            'body' => $body
         ];
 
         return $this->query($query, $variables);

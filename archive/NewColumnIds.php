@@ -26,6 +26,5 @@ class NewColumnIds {
     const ENTITY_TYPE = 'color_mkz3pvz9'; // Entidad (Universidad, Colegio, etc.)
     const IA_ANALYSIS = 'long_text_mkz360cv'; // Análisis IA
     const FORM_SUMMARY = 'long_text4'; // Resumen del Formulario
-    const PARTNER_REF = 'text_mkz3epfe'; // Interés/Especialidad (antes "Partner Ref")
 }
 ?>
