@@ -200,14 +200,15 @@ class LeadScoring {
         // Cargar configuración de idiomas
         $configPath = __DIR__ . '/language-config.json';
         if (!file_exists($configPath)) {
-            return 'Español'; // Fallback si no existe config
+            return 'Inglés'; // Fallback si no existe config
         }
         
         $config = json_decode(file_get_contents($configPath), true);
         $country = $data['country'] ?? '';
         
         if (empty($country)) {
-            return $config['default_language'] === 'es' ? 'Español' : $config['languages'][$config['default_language']]['name'];
+            $defaultLang = $config['default_language'] ?? 'en';
+            return $config['languages'][$defaultLang]['name'] ?? 'Inglés';
         }
         
         // Buscar país en configuración (case-insensitive)
@@ -220,6 +221,7 @@ class LeadScoring {
         }
         
         // Default si no se encuentra
-        return $config['languages'][$config['default_language']]['name'];
+        $defaultLang = $config['default_language'] ?? 'en';
+        return $config['languages'][$defaultLang]['name'] ?? 'Inglés';
     }
 }
