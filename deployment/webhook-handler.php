@@ -110,17 +110,7 @@ try {
     elseif (strpos($p, 'empresa') !== false) $entityLabel = 'Empresa';
     elseif (strpos($p, 'ciudad') !== false || strpos($p, 'pais') !== false) $entityLabel = 'Ciudad';
 
-    // Captura de Mensaje/Asunto/Especialidad para poner en PUESTO si está vacío el cargo
-    $roleDetected = strval($scoreResult['detected_role'] ?? 'Lead');
-    $additionalInfo = "";
-    if (!empty($data['asunto'])) $additionalInfo .= "Asunto: " . $data['asunto'] . ". ";
-    if (!empty($data['interes'])) $additionalInfo .= "Interés: " . $data['interes'] . ". ";
-    if (!empty($data['especialidad'])) $additionalInfo .= "Esp: " . $data['especialidad'] . ". ";
-    if (!empty($data['mensaje'])) $additionalInfo .= "Msg: " . substr($data['mensaje'], 0, 100) . "...";
-
-    $puestoFinal = $roleDetected;
-    if (!empty($additionalInfo)) $puestoFinal .= " (" . trim($additionalInfo) . ")";
-
+    $puestoFinal = strval($scoreResult['detected_role'] ?? 'Lead');
 
     // Preparar Columnas con formatos CORRECTOS
     $columnUpdates = [
