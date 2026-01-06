@@ -90,13 +90,13 @@ try {
     $monday = new MondayAPI(MONDAY_API_TOKEN);
     $boardId = MONDAY_BOARD_ID;
 
-    // Mapa de Entidad
-    $entityLabel = 'En curso';
+    // Mapa de Entidad (Status Column)
+    $entityLabel = 'Otro';
     $p = strtolower($scoringData['perfil']);
     if (strpos($p, 'institucion') !== false || strpos($p, 'pioneer') !== false) $entityLabel = 'Universidad';
-    elseif (strpos($p, 'zer') !== false || strpos($p, 'mentor') !== false) $entityLabel = 'Colegio';
-    elseif (strpos($p, 'empresa') !== false) $entityLabel = 'Corporativo';
-    elseif (strpos($p, 'ciudad') !== false || strpos($p, 'pais') !== false) $entityLabel = 'Gobierno';
+    elseif (strpos($p, 'zer') !== false || strpos($p, 'mentor') !== false) $entityLabel = 'Escuela';
+    elseif (strpos($p, 'empresa') !== false) $entityLabel = 'Empresa';
+    elseif (strpos($p, 'ciudad') !== false || strpos($p, 'pais') !== false) $entityLabel = 'Ciudad';
 
     // Preparar Columnas con formatos CORRECTOS
     $columnUpdates = [
