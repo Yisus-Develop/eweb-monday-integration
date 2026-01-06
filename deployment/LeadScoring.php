@@ -29,7 +29,8 @@ class LeadScoring {
         $breakdown = [];
         
         // 1. PERFIL (Máximo: 10 puntos) - CRÍTICO
-        $perfilScore = self::scoreByPerfil($data['perfil'] ?? 'general');
+        $perfil = $data['perfil'] ?? $data['profile'] ?? 'general';
+        $perfilScore = self::scoreByPerfil($perfil);
         $score += $perfilScore;
         $breakdown['perfil'] = $perfilScore;
         
@@ -49,13 +50,15 @@ class LeadScoring {
         }
         
         // 4. TAMAÑO DE INSTITUCIÓN (Máximo: 3 puntos)
-        if (isset($data['numero_estudiantes']) && $data['numero_estudiantes'] > 1000) {
+        $numEstudiantes = $data['numero_estudiantes'] ?? 0;
+        if ($numEstudiantes > 1000) {
             $score += 3;
             $breakdown['institucion_grande'] = 3;
         }
         
         // 5. POBLACIÓN (para ciudades) (Máximo: 3 puntos)
-        if (isset($data['poblacion']) && $data['poblacion'] > 100000) {
+        $poblacion = $data['poblacion'] ?? $data['population'] ?? 0;
+        if ($poblacion > 100000) {
             $score += 3;
             $breakdown['ciudad_grande'] = 3;
         }
