@@ -126,7 +126,7 @@ try {
     // Preparar Columnas con formatos CORRECTOS
     $columnUpdates = [
         NewColumnIds::EMAIL => ['email' => $scoringData['email'], 'text' => $scoringData['email']],
-        NewColumnIds::PHONE => ['phone' => $scoringData['phone'] ?: '0000'],
+        NewColumnIds::PHONE => ['phone' => $scoringData['phone'] ?: '0000', 'countryShortName' => ($scoringData['country'] ?: 'ES')],
         NewColumnIds::PUESTO => $puestoFinal,
         NewColumnIds::STATUS => ['label' => StatusConstants::STATUS_LEAD],
         NewColumnIds::LEAD_SCORE => (int)$scoreResult['total'],
