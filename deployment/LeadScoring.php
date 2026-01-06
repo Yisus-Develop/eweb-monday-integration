@@ -75,6 +75,24 @@ class LeadScoring {
             $breakdown['donacion'] = 3;
         }
         
+        // 8. ORGANIZACIÓN IDENTIFICADA (2 puntos) - Contexto comercial
+        if (!empty($data['organizacion'])) {
+            $score += 2;
+            $breakdown['organizacion_identificada'] = 2;
+        }
+        
+        // 9. INTERÉS ESPECÍFICO (2 puntos) - Lead cualificado
+        if (!empty($data['interes']) || !empty($data['especialidad'])) {
+            $score += 2;
+            $breakdown['interes_especifico'] = 2;
+        }
+        
+        // 10. MENSAJE DETALLADO (1 punto) - Engagement
+        if (!empty($data['mensaje']) && strlen($data['mensaje']) > 50) {
+            $score += 1;
+            $breakdown['mensaje_detallado'] = 1;
+        }
+        
         // Clasificación automática
         $classification = self::classify($score);
         

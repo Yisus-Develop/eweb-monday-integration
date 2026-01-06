@@ -91,6 +91,13 @@ try {
         'numero_estudiantes' => $data['numero_estudiantes'] ?? 0,
         'poblacion' => $data['poblacion'] ?? $data['population'] ?? 0,
         'population' => $data['population'] ?? $data['poblacion'] ?? 0,
+        
+        // Campos de contexto comercial críticos
+        'organizacion' => $data['org_name'] ?? $data['institucion'] ?? $data['ea_institution'] ?? '',
+        'interes' => $data['interes'] ?? '',
+        'especialidad' => $data['especialidad'] ?? '',
+        'asunto' => $data['asunto'] ?? '',
+        'mensaje' => $data['mensaje'] ?? '',
     ];
 
     if (!filter_var($scoringData['email'], FILTER_VALIDATE_EMAIL)) {
