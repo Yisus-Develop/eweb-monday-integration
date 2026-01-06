@@ -28,9 +28,15 @@ require_once 'StatusConstants.php';
 $logFile = __DIR__ . '/webhook_debug.log';
 function logMsg($msg, $isError = false) {
     global $logFile;
+    // Solo logueamos si es error O si el modo debug está activo
     if (!$isError && (!defined('WEBHOOK_DEBUG') || !WEBHOOK_DEBUG)) return;
-    if (file_exists($logFile) && filesize($logFile) > 5 * 1024 * 1024) rename($logFile, $logFile . '.old');
-    $prefix = $isError ? '[ERROR] ' : '[INFO] ';
+    
+    // Rotación básica de log (5MB)
+    if (file_exists($logFile) && filesize($logFile) > 5 * 1024 * 1024) {
+        rename($logFile, $logFile . '.' . date('Ymd-His') . '.old');
+    }
+    
+    $prefix = $isError ? '[ERROR] ' : '[INFO]  ';
     @file_put_contents($logFile, date('Y-m-d H:i:s') . " $prefix $msg\n", FILE_APPEND);
 }
 
