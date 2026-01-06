@@ -26,8 +26,14 @@ require_once 'StatusConstants.php';
 
 // --- SEGURIDAD: Validación de Token Secreto ---
 function getMCSecret() {
+    // 1. Intentar desde Query Parameter (Lo más fiable si el servidor bloquea cabeceras)
+    if (isset($_GET['mc_secret'])) return $_GET['mc_secret'];
+    
+    // 2. Intentar desde Cabeceras Standard
     if (isset($_SERVER['HTTP_X_MC_SECRET'])) return $_SERVER['HTTP_X_MC_SECRET'];
     if (isset($_SERVER['X_MC_SECRET'])) return $_SERVER['X_MC_SECRET'];
+    
+    // 3. Intentar desde Apache (si está disponible)
     if (function_exists('apache_request_headers')) {
         $headers = apache_request_headers();
         if (isset($headers['X-MC-Secret'])) return $headers['X-MC-Secret'];
