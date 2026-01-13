@@ -142,6 +142,11 @@ if ( ! class_exists( 'EWEB_GitHub_Updater' ) ) {
 				return false;
 			}
 
+			$code = wp_remote_retrieve_response_code( $response );
+			if ( 404 === $code ) {
+				return false; // Silencioso si no hay releases o el repo es privado
+			}
+
 			$this->github_response = json_decode( wp_remote_retrieve_body( $response ) );
 			return $this->github_response;
 		}

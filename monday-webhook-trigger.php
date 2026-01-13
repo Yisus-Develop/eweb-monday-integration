@@ -15,10 +15,17 @@ if (!defined('WPINC')) {
 require_once plugin_dir_path(__FILE__) . 'includes/class-eweb-github-updater.php';
 new EWEB_GitHub_Updater(__FILE__, 'Yisus-Develop', 'AI-Vault');
 
-// 2. Capture Hook from CF7
+// 2. Load Core Dependencies
+require_once plugin_dir_path(__FILE__) . 'includes/MondayAPI.php';
+require_once plugin_dir_path(__FILE__) . 'includes/LeadScoring.php';
+require_once plugin_dir_path(__FILE__) . 'includes/NewColumnIds.php';
+require_once plugin_dir_path(__FILE__) . 'includes/StatusConstants.php';
+require_once plugin_dir_path(__FILE__) . 'includes/class-monday-handler.php';
+
+// 3. Capture Hook from CF7
 add_action('wpcf7_mail_sent', 'monday_trigger_webhook_on_sent');
 
-// 3. Database Setup on Activation
+// 4. Database Setup on Activation
 register_activation_hook(__FILE__, 'monday_integration_create_db');
 function monday_integration_create_db() {
     global $wpdb;
@@ -41,6 +48,7 @@ function monday_integration_create_db() {
 }
 
 function monday_trigger_webhook_on_sent($contact_form) {
+    if (!isset($contact_form)) return;
     $submission = WPCF7_Submission::get_instance();
     if (!$submission) return;
 
@@ -48,40 +56,31 @@ function monday_trigger_webhook_on_sent($contact_form) {
     monday_send_to_handler($data, "Form: " . $contact_form->title());
 }
 
-    // 3. Logic to Send Webhook
+// 5. Logic to Send Lead (Internal Process)
 function monday_send_to_handler($data, $source = "Manual Test") {
     global $wpdb;
     $table_name = $wpdb->prefix . 'monday_leads_log';
     
-    // URL del handler robusto
-    $webhook_url = content_url('/monday-integration/webhook-handler.php');
+    // 🔥 Proceso Interno Directo (Elimina errores 401/500 externos)
+    $result = Monday_Handler::process($data);
     
-    $response = wp_remote_post($webhook_url, [
-        'headers' => [
-            'Content-Type' => 'application/json'
-        ],
-        'body'    => json_encode($data),
-        'timeout' => 20,
-        'blocking' => true,
-    ]);
-
     // Verificar que la tabla existe
     $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
     if (!$table_exists) {
         monday_integration_create_db();
     }
 
-    // Registro en la Base de Datos SQL (¡ESTO ES LO QUE FALTABA!)
+    // Registro en la Base de Datos SQL
     $wpdb->insert($table_name, [
         'time'          => current_time('mysql'),
         'email'         => $data['email'] ?? $data['your-email'] ?? $data['ea_email'] ?? 'N/A',
         'source'        => $source,
-        'status'        => is_wp_error($response) ? 'Error' : wp_remote_retrieve_response_code($response),
-        'response_body' => is_wp_error($response) ? $response->get_error_message() : substr(wp_remote_retrieve_body($response), 0, 500),
+        'status'        => $result['status'],
+        'response_body' => $result['message'] ?? 'OK',
         'full_payload'  => json_encode($data)
     ]);
     
-    return $response;
+    return $result;
 }
 
 // 4. Admin Menu & Dashboard
@@ -101,10 +100,10 @@ function monday_monitor_page_html() {
         
         if ($log) {
             $payload = json_decode($log->full_payload, true);
-            $response = monday_send_to_handler($payload, "Re-envío Manual (ID: $log_id)");
+            $result = monday_send_to_handler($payload, "Re-envío Manual (ID: $log_id)");
             
-            $code = is_wp_error($response) ? 'Error' : wp_remote_retrieve_response_code($response);
-            $body = is_wp_error($response) ? $response->get_error_message() : substr(wp_remote_retrieve_body($response), 0, 500);
+            $code = $result['status'];
+            $body = substr($result['message'] ?? 'OK', 0, 500);
             
             // Actualizar el log existente con el nuevo resultado
             $wpdb->update($table_name, 
@@ -162,18 +161,70 @@ function monday_monitor_page_html() {
     // Total de registros
     $total_items = $wpdb->get_var("SELECT COUNT(*) FROM $table_name $where");
     $total_pages = ceil($total_items / $per_page);
-    
+
     // Obtener registros
     $logs = $wpdb->get_results($wpdb->prepare(
         "SELECT * FROM $table_name $where ORDER BY id DESC LIMIT %d OFFSET %d",
         $per_page,
         $offset
     ));
+
+    // Pestaña activa
+    $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'logs';
+
+    // Manejo de opciones guardadas
+    if (isset($_POST['monday_save_settings'])) {
+        check_admin_referer('monday_save_settings');
+        update_option('monday_api_token', sanitize_text_field($_POST['monday_api_token']));
+        update_option('monday_board_id', sanitize_text_field($_POST['monday_board_id']));
+        update_option('monday_debug_mode', isset($_POST['monday_debug_mode']) ? 'yes' : 'no');
+        echo '<div class="updated"><p>✅ Configuración guardada correctamente.</p></div>';
+    }
+
+    $api_token = get_option('monday_api_token', '');
+    $board_id = get_option('monday_board_id', '');
+    $debug_mode = get_option('monday_debug_mode', 'yes');
     ?>
     <div class="wrap">
         <h1>📊 Monitor de Integración Monday.com</h1>
         
-        <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+        <h2 class="nav-tab-wrapper">
+            <a href="?page=monday-monitor&tab=logs" class="nav-tab <?php echo $active_tab == 'logs' ? 'nav-tab-active' : ''; ?>">Logs de Leads</a>
+            <a href="?page=monday-monitor&tab=settings" class="nav-tab <?php echo $active_tab == 'settings' ? 'nav-tab-active' : ''; ?>">⚙️ Configuración</a>
+        </h2>
+
+        <?php if ($active_tab == 'settings'): ?>
+            <div style="background: #fff; padding: 20px; border: 1px solid #ccd0d4; margin-top: 20px; max-width: 600px;">
+                <h3>Credenciales de Monday.com</h3>
+                <p class="description">Estos datos son privados y se guardan de forma segura en tu base de datos. No se suben a GitHub.</p>
+                <form method="post">
+                    <?php wp_nonce_field('monday_save_settings'); ?>
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="monday_api_token">API Token</label></th>
+                            <td><input name="monday_api_token" type="password" id="monday_api_token" value="<?php echo esc_attr($api_token); ?>" class="regular-text" placeholder="Tu token de Monday..."></td>
+                        </tr>
+                        <tr>
+                            <th><label for="monday_board_id">ID del Tablero</label></th>
+                            <td><input name="monday_board_id" type="text" id="monday_board_id" value="<?php echo esc_attr($board_id); ?>" class="regular-text" placeholder="Ej: 123456789"></td>
+                        </tr>
+                        <tr>
+                            <th>Modo Debug (Logs)</th>
+                            <td>
+                                <label class="switch">
+                                    <input type="checkbox" name="monday_debug_mode" <?php checked($debug_mode, 'yes'); ?>>
+                                    <span class="description">Activar registro de eventos en <code>webhook_debug.log</code> (Recomendado para pruebas)</span>
+                                </label>
+                            </td>
+                        </tr>
+                    </table>
+                    <p class="submit">
+                        <input type="submit" name="monday_save_settings" class="button button-primary" value="Guardar Cambios">
+                    </p>
+                </form>
+            </div>
+        <?php else: // Tab Logs ?>
+            <div style="display: flex; justify-content: space-between; margin: 20px 0;">
             <form method="post">
                 <input type="submit" name="monday_test_trigger" class="button button-primary" value="Enviar Lead de Prueba">
             </form>
@@ -317,7 +368,7 @@ function monday_monitor_page_html() {
             </div>
         </div>
         <?php endif; ?>
+        <?php endif; // Fin del Tab Logs ?>
     </div>
     <?php
 }
-
