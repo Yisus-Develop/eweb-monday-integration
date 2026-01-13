@@ -48,6 +48,13 @@ try {
     
     logMsg("Recibida petición. Datos: " . substr(print_r($data, true), 0, 500));
 
+    // Sanitización preventiva: Convertir todo lo que sea array a string si no es un campo esperado como array
+    foreach ($data as $key => $val) {
+        if (is_array($val)) {
+            $data[$key] = implode(', ', array_filter($val));
+        }
+    }
+
     // 1. Mapeo de Identidad y Limpieza de Nombre
     $rawName = $data['nombre'] ?? 
                $data['nombre_empresa'] ?? 
@@ -69,8 +76,13 @@ try {
 
     if (empty($rawName)) $rawName = 'Sin Nombre';
     
+    // 🔥 Asegurar que sea string (evitar error 500 en PHP 8 si llega como array)
+    if (is_array($rawName)) {
+        $rawName = implode(' ', array_filter($rawName));
+    }
+
     // Limpieza: Solo quitamos el prefijo de Mars Challenge y los corchetes específicos
-    $cleanName = trim(str_ireplace(['Mars Challenge', '«', '»'], '', $rawName));
+    $cleanName = trim(str_ireplace(['Mars Challenge', '«', '»'], '', (string)$rawName));
     
     // Si el nombre es "Sin Nombre" o muy corto, intentamos usar el email
     if ($cleanName === 'Sin Nombre' || strlen($cleanName) < 2) {
@@ -160,35 +172,28 @@ try {
         NewColumnIds::FORM_SUMMARY => ['text' => json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)]
     ];
 
-    // Manejo de Registro (Deduplicación con Historial en Sub-elementos)
-    $existing = $monday->getItemsByColumnValue($boardId, NewColumnIds::EMAIL, $scoringData['email']);
+    // 🚀 Registro: Siempre crear un nuevo item (Deduplicación desactivada por petición del usuario)
+    logMsg("Creando nuevo lead: " . $scoringData['name']);
+    $resp = $monday->createItem($boardId, $scoringData['name'], []);
+    $itemId = $resp['create_item']['id'] ?? null;
     $action = 'created';
-    
-    if (!empty($existing)) {
-        $itemId = $existing[0]['id'];
-        logMsg("Lead existente detectado ($itemId). Creando nota de historial (Update)...");
-        
-        $formTitle = $data['your-subject'] ?? $data['asunto'] ?? 'Nuevo Formulario Enviado';
-        $updateBody = "<b>📋 Historial de Formulario: $formTitle</b><br><br>";
-        $updateBody .= "Se ha recibido una nueva entrada para este contacto:<br><ul>";
+
+    if ($itemId) {
+        // Añadir nota de historial (Update) al nuevo item con todos los datos del formulario
+        $formTitle = $data['your-subject'] ?? $data['asunto'] ?? 'Formulario Recibido';
+        $updateBody = "<b>📋 Datos del Formulario: $formTitle</b><br><br>";
+        $updateBody .= "Se ha recibido una nueva entrada:<br><ul>";
         foreach ($data as $key => $val) {
             if (is_array($val)) $val = implode(', ', $val);
             $updateBody .= "<li><b>$key:</b> " . htmlspecialchars($val) . "</li>";
         }
-        $updateBody .= "</ul><br><i>Enviado el " . date('d/m/Y H:i:s') . " desde " . $_SERVER['HTTP_REFERER'] . "</i>";
+        $updateBody .= "</ul><br><i>Enviado el " . date('d/m/Y H:i:s') . "</i>";
         
         try {
             $monday->createUpdate($itemId, $updateBody);
         } catch (Exception $e) {
             logMsg("Error creando actualización (ignorado): " . $e->getMessage(), true);
         }
-        
-        logMsg("Actualizando lead principal: $itemId");
-        $action = 'updated';
-    } else {
-        logMsg("Creando nuevo lead: " . $scoringData['name']);
-        $resp = $monday->createItem($boardId, $scoringData['name'], []);
-        $itemId = $resp['create_item']['id'] ?? null;
     }
 
     if ($itemId) {

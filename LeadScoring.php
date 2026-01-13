@@ -212,10 +212,14 @@ class LeadScoring {
         }
         
         // Buscar país en configuración (case-insensitive)
-        foreach ($config['languages'] as $langCode => $langData) {
-            foreach ($langData['countries'] as $configCountry) {
-                if (strcasecmp($country, $configCountry) === 0) {
-                    return $langData['name'];
+        if (isset($config['languages']) && is_array($config['languages'])) {
+            foreach ($config['languages'] as $langCode => $langData) {
+                if (isset($langData['countries']) && is_array($langData['countries'])) {
+                    foreach ($langData['countries'] as $configCountry) {
+                        if (strcasecmp((string)$country, (string)$configCountry) === 0) {
+                            return $langData['name'];
+                        }
+                    }
                 }
             }
         }
