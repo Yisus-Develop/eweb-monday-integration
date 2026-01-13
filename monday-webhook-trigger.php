@@ -1,10 +1,18 @@
 <?php
 /**
- * Plugin Name:       Monday.com Lead Monitor & Trigger
- * Description:       Fires a webhook to Monday.com and provides an admin dashboard to track leads.
- * Version:           2.1
- * Author:            Yisus Develop
+ * Plugin Name:       EWEB - Monday.com Integration
+ * Plugin URI:        https://github.com/Yisus-Develop/eweb-monday-integration
+ * Description:       Seamless Monday.com lead integration for Contact Form 7 with intelligent scoring, language detection, and admin dashboard.
+ * Version:           2.1.0
+ * Requires at least: 5.8
  * Requires PHP:      8.1
+ * Author:            Yisus Develop
+ * Author URI:        https://github.com/Yisus-Develop
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       eweb-monday-integration
+ * Domain Path:       /languages
+ * Update URI:        https://github.com/Yisus-Develop/eweb-monday-integration
  */
 
 if (!defined('WPINC')) die;
