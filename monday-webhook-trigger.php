@@ -11,10 +11,14 @@ if (!defined('WPINC')) {
     die;
 }
 
-// 1. Capture Hook from CF7
+// 1. GitHub Auto-Updater Integration
+require_once plugin_dir_path(__FILE__) . 'includes/class-eweb-github-updater.php';
+new EWEB_GitHub_Updater(__FILE__, 'Yisus-Develop', 'AI-Vault');
+
+// 2. Capture Hook from CF7
 add_action('wpcf7_mail_sent', 'monday_trigger_webhook_on_sent');
 
-// 2. Database Setup on Activation
+// 3. Database Setup on Activation
 register_activation_hook(__FILE__, 'monday_integration_create_db');
 function monday_integration_create_db() {
     global $wpdb;
