@@ -64,7 +64,7 @@ if ( ! class_exists( 'EWEB_GitHub_Updater' ) ) {
 			$remote = $this->get_github_data();
 			$local_data = $this->get_local_plugin_data();
 
-			if ( $remote && version_compare( $local_data['Version'], $remote->tag_name, '<' ) ) {
+			if ( $remote && isset( $remote->tag_name ) && version_compare( $local_data['Version'], $remote->tag_name, '<' ) ) {
 				$obj = new stdClass();
 				$obj->slug = dirname( $this->plugin_slug );
 				$obj->new_version = $remote->tag_name;
